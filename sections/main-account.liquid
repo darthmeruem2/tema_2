@@ -1,0 +1,92 @@
+<div class="main-page--root" style="max-width:760px;">
+
+  <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:var(--layout--spacing-large);">
+    <h1 class="main-page--title" style="margin-bottom:0;">MINHA CONTA</h1>
+    <a href="/account/logout" style="font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--color--gray);">
+      SAIR
+    </a>
+  </div>
+
+  <!-- Customer info -->
+  <div style="margin-bottom:var(--layout--spacing-large);">
+    <p style="font-size:11px; text-transform:uppercase; color:var(--color--gray);">
+      Olá, {{ customer.first_name | upcase }} {{ customer.last_name | upcase }}
+    </p>
+    <p style="font-size:11px; color:var(--color--body--light); text-transform:uppercase;">{{ customer.email }}</p>
+  </div>
+
+  <!-- Orders -->
+  <div>
+    <h2 style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:var(--layout--spacing-medium); padding-bottom:12px; border-bottom:1px solid rgba(0,0,0,0.08);">
+      HISTÓRICO DE PEDIDOS
+    </h2>
+
+    {%- if customer.orders.size > 0 -%}
+      <table style="width:100%; border-collapse:collapse; font-size:11px; text-transform:uppercase;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding:8px 0; font-weight:600; color:var(--color--gray); border-bottom:1px solid rgba(0,0,0,0.08);">Pedido</th>
+            <th style="text-align:left; padding:8px 0; font-weight:600; color:var(--color--gray); border-bottom:1px solid rgba(0,0,0,0.08);">Data</th>
+            <th style="text-align:left; padding:8px 0; font-weight:600; color:var(--color--gray); border-bottom:1px solid rgba(0,0,0,0.08);">Status</th>
+            <th style="text-align:right; padding:8px 0; font-weight:600; color:var(--color--gray); border-bottom:1px solid rgba(0,0,0,0.08);">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for order in customer.orders -%}
+            <tr>
+              <td style="padding:12px 0; border-bottom:1px solid rgba(0,0,0,0.04);">
+                <a href="{{ order.customer_url }}" style="font-weight:600; border-bottom:1px solid currentColor; padding-bottom:1px;">
+                  {{ order.name }}
+                </a>
+              </td>
+              <td style="padding:12px 0; border-bottom:1px solid rgba(0,0,0,0.04); color:var(--color--gray);">
+                {{ order.created_at | date: '%d/%m/%Y' }}
+              </td>
+              <td style="padding:12px 0; border-bottom:1px solid rgba(0,0,0,0.04);">
+                {{ order.financial_status_label }}
+              </td>
+              <td style="padding:12px 0; border-bottom:1px solid rgba(0,0,0,0.04); text-align:right; font-weight:600;">
+                {{ order.total_price | money }}
+              </td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    {%- else -%}
+      <p style="font-size:11px; text-transform:uppercase; color:var(--color--gray); margin-bottom:var(--layout--spacing-medium);">
+        Você ainda não fez nenhum pedido.
+      </p>
+      <a href="/collections/all" class="btn btn--1">COMPRAR AGORA</a>
+    {%- endif -%}
+  </div>
+
+  <!-- Default address -->
+  {%- if customer.default_address -%}
+    <div style="margin-top:var(--layout--spacing-large); padding-top:var(--layout--spacing-medium); border-top:1px solid rgba(0,0,0,0.06);">
+      <h2 style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:16px;">
+        ENDEREÇO PRINCIPAL
+      </h2>
+      <address style="font-style:normal; font-size:11px; text-transform:uppercase; color:var(--color--body--light); line-height:1.8;">
+        {{ customer.default_address.name }}<br>
+        {{ customer.default_address.address1 }}<br>
+        {%- if customer.default_address.address2 != blank -%}
+          {{ customer.default_address.address2 }}<br>
+        {%- endif -%}
+        {{ customer.default_address.city }}, {{ customer.default_address.province_code }} {{ customer.default_address.zip }}<br>
+        {{ customer.default_address.country }}
+      </address>
+      <a href="/account/addresses" style="display:inline-block; margin-top:12px; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; border-bottom:1px solid currentColor; padding-bottom:1px;">
+        GERENCIAR ENDEREÇOS
+      </a>
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "Account",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

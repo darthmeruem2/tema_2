@@ -1,0 +1,96 @@
+<footer class="site-footer" role="contentinfo">
+  <div class="site-footer--main">
+    <!-- Col 1: Brand -->
+    <div>
+      <a href="{{ routes.root_url }}" class="site-footer--logo">{{ shop.name }}</a>
+      {%- if section.settings.tagline != blank -%}
+        <p class="site-footer--tagline">{{ section.settings.tagline }}</p>
+      {%- endif -%}
+    </div>
+
+    <!-- Col 2: Navigation -->
+    <div>
+      <p class="site-footer--col-heading">{{ section.settings.nav_heading | default: 'Company' | upcase }}</p>
+      {%- assign nav_menu = section.settings.menu | default: 'footer' -%}
+      <ul class="site-footer--col-links">
+        {%- if linklists[nav_menu].links.size > 0 -%}
+          {%- for link in linklists[nav_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title | upcase }}</a></li>
+          {%- endfor -%}
+        {%- else -%}
+          <li><a href="/pages/about">ABOUT</a></li>
+          <li><a href="/pages/faq">FAQ</a></li>
+          <li><a href="/collections/all">PRODUCTS</a></li>
+          <li><a href="/policies/terms-of-service">TERMS</a></li>
+          <li><a href="/policies/privacy-policy">POLICY</a></li>
+        {%- endif -%}
+      </ul>
+    </div>
+
+    <!-- Col 3: Social -->
+    <div>
+      <p class="site-footer--col-heading">{{ section.settings.social_heading | default: 'Follow' | upcase }}</p>
+      <ul class="site-footer--col-links">
+        {%- if section.settings.instagram != blank -%}<li><a href="{{ section.settings.instagram }}" target="_blank" rel="noopener">INSTAGRAM</a></li>{%- endif -%}
+        {%- if section.settings.tiktok != blank -%}<li><a href="{{ section.settings.tiktok }}" target="_blank" rel="noopener">TIKTOK</a></li>{%- endif -%}
+        {%- if section.settings.facebook != blank -%}<li><a href="{{ section.settings.facebook }}" target="_blank" rel="noopener">FACEBOOK</a></li>{%- endif -%}
+        {%- if section.settings.twitter != blank -%}<li><a href="{{ section.settings.twitter }}" target="_blank" rel="noopener">TWITTER</a></li>{%- endif -%}
+        {%- if section.settings.blog_link != blank -%}<li><a href="{{ section.settings.blog_link }}">BLOG</a></li>{%- endif -%}
+        {%- if section.settings.instagram == blank and section.settings.tiktok == blank -%}
+          <li><a href="#">INSTAGRAM</a></li>
+          <li><a href="#">TIKTOK</a></li>
+          <li><a href="#">FACEBOOK</a></li>
+        {%- endif -%}
+      </ul>
+    </div>
+
+    <!-- Col 4: Newsletter -->
+    {%- if section.settings.show_newsletter -%}
+      <div>
+        <p class="site-footer--newsletter-heading">{{ section.settings.newsletter_heading | default: 'Subscribe to our newsletter' | upcase }}</p>
+        <form class="site-footer--newsletter-form" action="/contact#contact_form" method="post">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="✓">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="{{ section.settings.newsletter_placeholder | default: 'Your email' | upcase }}"
+            aria-label="Email address"
+            required
+          >
+          <button type="submit">{{ section.settings.newsletter_button | default: 'SEND' | upcase }}</button>
+        </form>
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div class="site-footer--bottom">
+    <p class="site-footer--copyright">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name | upcase }}. All Rights Reserved.
+    </p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "section",
+  "class": "section-footer",
+  "settings": [
+    { "type": "text", "id": "tagline", "label": "Brand tagline", "default": "Clinical skincare rooted in nature." },
+    { "type": "text", "id": "nav_heading", "label": "Navigation column heading", "default": "Company" },
+    { "type": "link_list", "id": "menu", "label": "Footer menu", "default": "footer" },
+    { "type": "text", "id": "social_heading", "label": "Social column heading", "default": "Follow" },
+    { "type": "url", "id": "instagram", "label": "Instagram URL" },
+    { "type": "url", "id": "tiktok", "label": "TikTok URL" },
+    { "type": "url", "id": "facebook", "label": "Facebook URL" },
+    { "type": "url", "id": "twitter", "label": "Twitter / X URL" },
+    { "type": "url", "id": "blog_link", "label": "Blog link" },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "checkbox", "id": "show_newsletter", "label": "Show newsletter signup", "default": true },
+    { "type": "text", "id": "newsletter_heading", "label": "Newsletter heading", "default": "Subscribe to our newsletter" },
+    { "type": "text", "id": "newsletter_placeholder", "label": "Email placeholder", "default": "Your email" },
+    { "type": "text", "id": "newsletter_button", "label": "Submit button", "default": "Send" }
+  ]
+}
+{% endschema %}

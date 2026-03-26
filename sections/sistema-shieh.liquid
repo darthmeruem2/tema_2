@@ -1,0 +1,95 @@
+<section class="sistema-shieh sistema-shieh-section">
+  <p class="sistema-shieh--overline">{{ section.settings.overline }}</p>
+  <h2 class="sistema-shieh--heading">{{ section.settings.heading }}</h2>
+
+  <div class="sistema-shieh--steps">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'step' -%}
+        <div class="sistema-shieh--step" {{ block.shopify_attributes }}>
+          <span class="step-number">{{ block.settings.step_number }}</span>
+          <h3 class="step-name">{{ block.settings.step_name }}</h3>
+          <p class="step-description">{{ block.settings.step_description }}</p>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sistema SHIEH",
+  "tag": "section",
+  "class": "sistema-shieh-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "overline",
+      "label": "Overline",
+      "default": "The SHIEH Method"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Three Steps to Skincare You Can Actually Verify"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step Number",
+          "default": "01"
+        },
+        {
+          "type": "text",
+          "id": "step_name",
+          "label": "Step Name",
+          "default": "KNOW"
+        },
+        {
+          "type": "textarea",
+          "id": "step_description",
+          "label": "Step Description",
+          "default": "Read your label with confidence. Every INCI list tells a story — position 1 is the most abundant ingredient. Position 12 is a gesture."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sistema SHIEH",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "01",
+            "step_name": "KNOW",
+            "step_description": "Read your label with confidence. Every INCI list tells a story — position 1 is the most abundant ingredient. Position 12 is a gesture. We teach you the difference."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "02",
+            "step_name": "CHOOSE",
+            "step_description": "Select the right active for your skin — not the most expensive one. With concentration knowledge, you shop on evidence. Not on packaging."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "step_number": "03",
+            "step_name": "VERIFY",
+            "step_description": "Track measurable results, not promises. 5% Niacinamide: visible texture improvement in 4–6 weeks. AHA 10%: cell renewal in 8–12 days. Real numbers, always."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

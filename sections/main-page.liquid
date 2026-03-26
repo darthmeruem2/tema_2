@@ -1,0 +1,16 @@
+<div class="main-page--root">
+  <h1 class="main-page--title">{{ page.title | upcase }}</h1>
+  {%- if page.content != blank -%}
+    <div class="main-page--content">
+      {{ page.content }}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Page",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

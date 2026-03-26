@@ -1,0 +1,105 @@
+<div class="featured-text--root">
+  <div class="featured-text--wrapper">
+    <div class="section-blocks--root">
+      <div class="section-blocks--wrapper">
+
+        {%- if section.settings.overline != blank -%}
+          <div class="section-blocks--block">
+            <p class="section-blocks--overline">{{ section.settings.overline | upcase }}</p>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <div class="section-blocks--block">
+            <h2 class="section-blocks--title">{{ section.settings.heading | upcase }}</h2>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.paragraph != blank -%}
+          <div class="section-blocks--block">
+            <p class="section-blocks--paragraph">{{ section.settings.paragraph }}</p>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <div class="section-blocks--button-group">
+            <a
+              class="btn btn--1"
+              href="{{ section.settings.button_link | default: '#' }}"
+            >
+              {{ section.settings.button_label | upcase }}
+            </a>
+            {%- if section.settings.button_label_2 != blank -%}
+              <a
+                class="btn btn--3"
+                href="{{ section.settings.button_link_2 | default: '#' }}"
+              >
+                {{ section.settings.button_label_2 | upcase }}
+              </a>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Text",
+  "tag": "section",
+  "class": "section-featured-text",
+  "settings": [
+    {
+      "type": "text",
+      "id": "overline",
+      "label": "Overline / tag",
+      "default": "New Collection"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The Science of Beautiful Skin"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph",
+      "label": "Body text",
+      "default": "SHIEH is formulated with premium active ingredients sourced from nature, backed by clinical research. Every product is designed to work in harmony with your skin's natural biology."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button 1 label",
+      "default": "Discover the collection"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button 1 link"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Button 2 label (optional)"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Button 2 link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Text",
+      "settings": {
+        "overline": "New Collection",
+        "heading": "The Science of Beautiful Skin",
+        "button_label": "Discover the collection"
+      }
+    }
+  ]
+}
+{% endschema %}

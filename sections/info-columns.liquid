@@ -1,0 +1,127 @@
+<div class="info-columns--root">
+  <div class="info-columns--grid">
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'column' -%}
+        <div class="info-columns--item" {{ block.shopify_attributes }}>
+
+          {%- if block.settings.image != blank -%}
+            <a
+              class="info-columns--item--media"
+              href="{{ block.settings.link | default: '#' }}"
+              aria-label="{{ block.settings.heading }}"
+            >
+              <img
+                src="{{ block.settings.image | image_url: width: 570 }}"
+                alt="{{ block.settings.image.alt | default: block.settings.heading | escape }}"
+                width="285"
+                height="356"
+                loading="lazy"
+              >
+            </a>
+          {%- else -%}
+            <div class="info-columns--item--media">
+              {{ 'collection-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+
+          {%- if block.settings.heading != blank -%}
+            <h3 class="info-columns--item--title">{{ block.settings.heading | upcase }}</h3>
+          {%- endif -%}
+
+          {%- if block.settings.text != blank -%}
+            <p class="info-columns--item--text">{{ block.settings.text | upcase }}</p>
+          {%- endif -%}
+
+          {%- if block.settings.link_label != blank -%}
+            <a
+              class="info-columns--item--link"
+              href="{{ block.settings.link | default: '#' }}"
+            >
+              {{ block.settings.link_label | upcase }}
+            </a>
+          {%- endif -%}
+
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Info Columns",
+  "tag": "section",
+  "class": "section-info-columns",
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Recommended: 285 × 356px"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Our Promise"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Describe this value or feature in a few words."
+        },
+        {
+          "type": "text",
+          "id": "link_label",
+          "label": "Link text (optional)",
+          "default": "Learn more"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Info Columns",
+      "blocks": [
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Sustainability",
+            "text": "Our holistic approach to beauty — sustainable sourcing, recyclable packaging, cruelty-free always.",
+            "link_label": "Learn more"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Our Story",
+            "text": "Born from a passion for skin science and clean beauty. SHIEH was created to redefine your skincare ritual.",
+            "link_label": "About us"
+          }
+        },
+        {
+          "type": "column",
+          "settings": {
+            "heading": "Ingredients",
+            "text": "Centella Asiatica, Bakuchiol, Hyaluronic Acid — every formula is built on science you can trust.",
+            "link_label": "Our ingredients"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

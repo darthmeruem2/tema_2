@@ -1,0 +1,128 @@
+<div class="collapsible-rows--root">
+  <div class="collapsible-rows--wrapper">
+
+    {%- if section.settings.heading != blank -%}
+      <div class="collapsible-rows--header">
+        <h2>{{ section.settings.heading | upcase }}</h2>
+      </div>
+    {%- endif -%}
+
+    {%- if section.settings.columns == '2' -%}
+      {%- assign layout_class = 'is-two-col' -%}
+    {%- else -%}
+      {%- assign layout_class = '' -%}
+    {%- endif -%}
+    {%- if section.settings.columns == '2' -%}
+
+      {%- assign row_count = section.blocks.size -%}
+      {%- assign half = row_count | divided_by: 2 | ceil -%}
+
+      <div class="collapsible-rows--main is-two-col">
+
+        <div class="collapsible-rows--col">
+          {%- for block in section.blocks -%}
+            {%- if forloop.index <= half -%}
+              {%- render 'collapsible-row', block: block -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        <div class="collapsible-rows--col">
+          {%- for block in section.blocks -%}
+            {%- if forloop.index > half -%}
+              {%- render 'collapsible-row', block: block -%}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+      </div>
+
+    {%- else -%}
+
+      <div class="collapsible-rows--main">
+        {%- for block in section.blocks -%}
+          {%- render 'collapsible-row', block: block -%}
+        {%- endfor -%}
+      </div>
+
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collapsible Rows",
+  "tag": "section",
+  "class": "section-collapsible-rows",
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Key Ingredient"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Describe this ingredient or answer a question here.</p>"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading"
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Layout columns",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Key Ingredients",
+      "settings": {
+        "heading": "Key Ingredients",
+        "columns": "1"
+      },
+      "blocks": [
+        {
+          "type": "row",
+          "settings": {
+            "heading": "Hyaluronic Acid",
+            "content": "<p>A powerful humectant that binds up to 1,000x its weight in water, delivering deep hydration to all skin layers.</p>"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "heading": "Centella Asiatica",
+            "content": "<p>A healing botanical known for its ability to calm redness, support the skin barrier and accelerate wound healing.</p>"
+          }
+        },
+        {
+          "type": "row",
+          "settings": {
+            "heading": "Bakuchiol",
+            "content": "<p>A plant-derived alternative to retinol that stimulates collagen production without irritation. Suitable for sensitive skin.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

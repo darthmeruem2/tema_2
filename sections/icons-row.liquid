@@ -1,0 +1,134 @@
+<div class="icons-row--root">
+  <div class="icons-row--grid">
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'icon_item' -%}
+        <div class="icons-row--item" {{ block.shopify_attributes }}>
+
+          <div class="icons-row--icon" aria-hidden="true">
+            {%- case block.settings.icon -%}
+              {%- when 'skin' -%}
+                <svg viewBox="0 0 44 44">
+                  <circle cx="22" cy="14" r="8"/>
+                  <path d="M8 40c0-7.73 6.27-14 14-14s14 6.27 14 14"/>
+                  <circle cx="22" cy="14" r="3"/>
+                </svg>
+              {%- when 'plant' -%}
+                <svg viewBox="0 0 44 44">
+                  <path d="M22 38V20"/>
+                  <path d="M22 20C22 12 14 6 6 8c2 8 10 14 16 12"/>
+                  <path d="M22 26C22 18 30 12 38 14c-2 8-10 14-16 12"/>
+                </svg>
+              {%- when 'package' -%}
+                <svg viewBox="0 0 44 44">
+                  <rect x="6" y="14" width="32" height="24" rx="0"/>
+                  <polyline points="6,14 22,6 38,14"/>
+                  <line x1="22" y1="6" x2="22" y2="38"/>
+                  <polyline points="14,10 22,14 30,10"/>
+                </svg>
+              {%- when 'lab' -%}
+                <svg viewBox="0 0 44 44">
+                  <path d="M16 6v14l-8 18h28L28 20V6"/>
+                  <line x1="16" y1="6" x2="28" y2="6"/>
+                  <path d="M14 28h16"/>
+                </svg>
+              {%- when 'heart' -%}
+                <svg viewBox="0 0 44 44">
+                  <path d="M22 36s-16-10-16-20a8 8 0 0116 0 8 8 0 0116 0c0 10-16 20-16 20z"/>
+                </svg>
+              {%- else -%}
+                <svg viewBox="0 0 44 44">
+                  <circle cx="22" cy="22" r="16"/>
+                  <line x1="22" y1="14" x2="22" y2="22"/>
+                  <circle cx="22" cy="28" r="1" fill="currentColor"/>
+                </svg>
+            {%- endcase -%}
+          </div>
+
+          {%- if block.settings.title != blank -%}
+            <h3 class="icons-row--title">{{ block.settings.title | upcase }}</h3>
+          {%- endif -%}
+
+          {%- if block.settings.text != blank -%}
+            <p class="icons-row--text">{{ block.settings.text | upcase }}</p>
+          {%- endif -%}
+
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Icons Row",
+  "tag": "section",
+  "class": "section-icons-row",
+  "blocks": [
+    {
+      "type": "icon_item",
+      "name": "Icon item",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "skin",    "label": "All skin types" },
+            { "value": "plant",   "label": "Plant based" },
+            { "value": "package", "label": "Packaging" },
+            { "value": "lab",     "label": "Lab tested" },
+            { "value": "heart",   "label": "Cruelty free" }
+          ],
+          "default": "skin"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "All Skin Types"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Description",
+          "default": "Uniquely formulated to embrace all skin tones and textures."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Icons Row",
+      "blocks": [
+        {
+          "type": "icon_item",
+          "settings": {
+            "icon": "skin",
+            "title": "All Skin Types",
+            "text": "Uniquely formulated to embrace all skin tones and textures."
+          }
+        },
+        {
+          "type": "icon_item",
+          "settings": {
+            "icon": "plant",
+            "title": "100% Plant Based",
+            "text": "Harnessing the power of nature — every ingredient is plant-derived."
+          }
+        },
+        {
+          "type": "icon_item",
+          "settings": {
+            "icon": "package",
+            "title": "Plastic Free",
+            "text": "Our packaging is 100% recyclable and sustainably sourced."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

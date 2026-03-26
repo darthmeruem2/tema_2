@@ -1,0 +1,102 @@
+{
+  "sections": {
+    "about-hero": {
+      "type": "about-hero",
+      "settings": {
+        "overline": "Our Story",
+        "heading": "The Gift of SHIEH Beauty",
+        "body": "<p>We believe great skin starts with clean, clinical formulas and a deep respect for nature. SHIEH was built on the principle that effective skincare should be honest, pure, and accessible to everyone.</p>"
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "review-1": {
+          "type": "item",
+          "settings": {
+            "author": "Sarah M.",
+            "text": "\"SHIEH transformed my skin in just 4 weeks. My complexion has never looked more radiant or felt more balanced.\"",
+            "rating": 5
+          }
+        },
+        "review-2": {
+          "type": "item",
+          "settings": {
+            "author": "James R.",
+            "text": "\"The cleanser and serum duo is genuinely life-changing. Clean ingredients that actually work — rare find.\"",
+            "rating": 5
+          }
+        },
+        "review-3": {
+          "type": "item",
+          "settings": {
+            "author": "Priya K.",
+            "text": "\"Sensitive skin approved! Finally a brand I can trust without checking every single ingredient label.\"",
+            "rating": 5
+          }
+        }
+      },
+      "block_order": ["review-1", "review-2", "review-3"],
+      "settings": {
+        "overline": "What Our Customers Say",
+        "heading": "Real Results, Real People"
+      }
+    },
+    "image-with-text": {
+      "type": "image-with-text",
+      "settings": {
+        "overline": "Our Commitment",
+        "heading": "Clean Science, Pure Results",
+        "body": "Every SHIEH formula is developed with dermatologists, tested for all skin types, and crafted from certified organic botanicals. We never compromise on purity.",
+        "button_label": "Shop Now",
+        "button_link": "/collections/all",
+        "layout": "image_first"
+      }
+    },
+    "icons-row": {
+      "type": "icons-row",
+      "blocks": {
+        "icon-1": {
+          "type": "item",
+          "settings": {
+            "icon": "skin",
+            "title": "All Skin Types",
+            "description": "Formulated to work in harmony with every skin type — sensitive, oily, dry, and combination."
+          }
+        },
+        "icon-2": {
+          "type": "item",
+          "settings": {
+            "icon": "plant",
+            "title": "Pure Organic",
+            "description": "Certified organic botanicals and clinically-proven actives from trusted global suppliers."
+          }
+        },
+        "icon-3": {
+          "type": "item",
+          "settings": {
+            "icon": "leaf",
+            "title": "Always Vegan",
+            "description": "100% cruelty-free. No parabens, no sulphates. Kind to your skin and the planet."
+          }
+        }
+      },
+      "block_order": ["icon-1", "icon-2", "icon-3"],
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "tagline": "Clinical skincare rooted in nature.",
+        "show_newsletter": true
+      }
+    }
+  },
+  "order": [
+    "about-hero",
+    "testimonials",
+    "image-with-text",
+    "icons-row",
+    "footer"
+  ]
+}

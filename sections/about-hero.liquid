@@ -1,0 +1,53 @@
+<div class="about-hero--root">
+  <div class="about-hero--images">
+    {%- if section.settings.image_left != blank -%}
+      <div class="about-hero--image about-hero--image-left">
+        <img
+          src="{{ section.settings.image_left | image_url: width: 720 }}"
+          alt="{{ section.settings.image_left.alt | escape }}"
+          width="720" height="900" loading="eager"
+        >
+      </div>
+    {%- else -%}
+      <div class="about-hero--image about-hero--image-left about-hero--placeholder"></div>
+    {%- endif -%}
+
+    {%- if section.settings.image_right != blank -%}
+      <div class="about-hero--image about-hero--image-right">
+        <img
+          src="{{ section.settings.image_right | image_url: width: 480 }}"
+          alt="{{ section.settings.image_right.alt | escape }}"
+          width="480" height="640" loading="eager"
+        >
+      </div>
+    {%- else -%}
+      <div class="about-hero--image about-hero--image-right about-hero--placeholder"></div>
+    {%- endif -%}
+  </div>
+
+  <div class="about-hero--content">
+    {%- if section.settings.overline != blank -%}
+      <p class="about-hero--overline">{{ section.settings.overline }}</p>
+    {%- endif -%}
+    <h1 class="about-hero--heading">{{ section.settings.heading | default: 'The Gift of Beauty' }}</h1>
+    {%- if section.settings.body != blank -%}
+      <div class="about-hero--body">{{ section.settings.body }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Hero",
+  "tag": "section",
+  "class": "section-about-hero",
+  "settings": [
+    { "type": "image_picker", "id": "image_left", "label": "Left image (portrait)" },
+    { "type": "image_picker", "id": "image_right", "label": "Right image (smaller)" },
+    { "type": "text", "id": "overline", "label": "Overline", "default": "Our Story" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Gift of SHIEH Beauty" },
+    { "type": "richtext", "id": "body", "label": "Description", "default": "<p>We believe great skin starts with clean, clinical formulas and a deep respect for nature. SHIEH was built on the principle that effective skincare should be honest, pure, and accessible to everyone.</p>" }
+  ],
+  "presets": [{ "name": "About Hero" }]
+}
+{% endschema %}

@@ -1,0 +1,71 @@
+<div class="main-collection--root">
+
+  <div class="main-collection--header">
+    <h1 class="main-collection--title">{{ blog.title | upcase }}</h1>
+  </div>
+
+  {%- paginate blog.articles by 9 -%}
+    <div class="main-collection--grid">
+      {%- for article in blog.articles -%}
+        <article style="padding:0 20px 48px 20px;">
+          {%- if article.image -%}
+            <a href="{{ article.url }}" style="display:block; overflow:hidden; margin-bottom:16px; aspect-ratio:4/3; background:var(--bg-color--light);">
+              <img
+                src="{{ article.image | image_url: width: 600 }}"
+                alt="{{ article.image.alt | default: article.title | escape }}"
+                width="600" height="450"
+                loading="lazy"
+                style="width:100%; height:100%; object-fit:cover; transition:transform 0.4s ease;"
+              >
+            </a>
+          {%- endif -%}
+          <p style="font-size:10px; color:var(--color--gray); text-transform:uppercase; margin-bottom:8px;">
+            {{ article.published_at | date: '%B %d, %Y' | upcase }}
+          </p>
+          <h2 style="font-size:16px; font-weight:700; text-transform:uppercase; margin-bottom:12px; line-height:1.3;">
+            <a href="{{ article.url }}">{{ article.title | upcase }}</a>
+          </h2>
+          {%- if article.excerpt != blank -%}
+            <p style="font-size:11px; text-transform:uppercase; color:var(--color--body--light); line-height:1.65; margin-bottom:16px;">
+              {{ article.excerpt | strip_html | truncate: 120 }}
+            </p>
+          {%- endif -%}
+          <a href="{{ article.url }}" style="font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; border-bottom:1px solid currentColor; padding-bottom:1px;">
+            READ MORE
+          </a>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      <nav class="main-collection--pagination">
+        {%- if paginate.previous -%}
+          <a class="pagination--prev pagination--link" href="{{ paginate.previous.url }}">
+            <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+          </a>
+        {%- endif -%}
+        {%- for part in paginate.parts -%}
+          {%- if part.is_link -%}
+            <a class="pagination--link" href="{{ part.url }}">{{ part.title }}</a>
+          {%- else -%}
+            <span class="pagination--link{% if part.title == paginate.current_page %} active{% endif %}">{{ part.title }}</span>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if paginate.next -%}
+          <a class="pagination--next pagination--link" href="{{ paginate.next.url }}">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "Blog",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

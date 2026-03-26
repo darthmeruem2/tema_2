@@ -1,0 +1,92 @@
+<div class="email-capture">
+  <div class="email-capture--inner">
+    {%- if section.settings.overline != blank -%}
+      <span class="email-capture--overline">{{ section.settings.overline }}</span>
+    {%- endif -%}
+
+    <h2 class="email-capture--heading">{{ section.settings.heading }}</h2>
+
+    {%- if section.settings.subheading != blank -%}
+      <p class="email-capture--subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    {%- form 'customer' -%}
+      {%- if form.errors -%}
+        <div class="email-capture--errors">
+          {{ form.errors | default_errors }}
+        </div>
+      {%- endif -%}
+
+      {%- if form.posted_successfully? -%}
+        <p class="email-capture--success">Thank you for subscribing!</p>
+      {%- else -%}
+        <input type="hidden" name="contact[tags]" value="newsletter,inci-guide">
+
+        <div class="email-capture--form-row">
+          <label for="email-capture-input" class="visually-hidden">Email address</label>
+          <input
+            type="email"
+            id="email-capture-input"
+            name="contact[email]"
+            class="email-capture--input"
+            placeholder="your@email.com"
+            required
+            autocomplete="email"
+          >
+          <button type="submit" class="btn btn--primary email-capture--submit">
+            {{ section.settings.cta_text }}
+          </button>
+        </div>
+      {%- endif -%}
+    {%- endform -%}
+
+    {%- if section.settings.note_text != blank -%}
+      <p class="email-capture--note">{{ section.settings.note_text }}</p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Email Capture",
+  "tag": "div",
+  "class": "email-capture-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "overline",
+      "label": "Overline",
+      "default": "The INCI Guide"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "You're Being Lied to by Your Skincare Label."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Download The INCI Guide — the cosmetic scientist's toolkit for decoding ingredient lists, spotting filler concentrations, and buying skincare that actually works. Free, immediate, no strings."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA Button Text",
+      "default": "Send Me The Guide"
+    },
+    {
+      "type": "text",
+      "id": "note_text",
+      "label": "Note Text",
+      "default": "Your email only. No spam. Unsubscribe anytime."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Email Capture"
+    }
+  ]
+}
+{% endschema %}

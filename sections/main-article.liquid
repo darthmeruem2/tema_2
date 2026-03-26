@@ -1,0 +1,52 @@
+<div class="main-page--root" style="max-width:760px;">
+
+  <div style="margin-bottom:var(--layout--spacing-large);">
+    <a href="{{ blog.url }}" style="font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--color--gray);">
+      ← {{ blog.title | upcase }}
+    </a>
+  </div>
+
+  <p style="font-size:10px; text-transform:uppercase; color:var(--color--gray); letter-spacing:0.05em; margin-bottom:12px;">
+    {{ article.published_at | date: '%B %d, %Y' | upcase }}
+    {%- if article.tags.size > 0 %} &nbsp;·&nbsp;
+      {%- for tag in article.tags -%}
+        {{ tag | upcase }}{%- unless forloop.last %}, {% endunless %}
+      {%- endfor -%}
+    {%- endif %}
+  </p>
+
+  <h1 class="main-page--title">{{ article.title | upcase }}</h1>
+
+  {%- if article.image -%}
+    <div style="overflow:hidden; margin-bottom:var(--layout--spacing-large); aspect-ratio:16/9; background:var(--bg-color--light);">
+      <img
+        src="{{ article.image | image_url: width: 1520 }}"
+        alt="{{ article.image.alt | default: article.title | escape }}"
+        width="760"
+        height="428"
+        loading="eager"
+        style="width:100%; height:100%; object-fit:cover;"
+      >
+    </div>
+  {%- endif -%}
+
+  <div class="main-page--content">
+    {{ article.content }}
+  </div>
+
+  <!-- Author -->
+  {%- if article.author != blank -%}
+    <div style="margin-top:var(--layout--spacing-large); padding-top:var(--layout--spacing-medium); border-top:1px solid rgba(0,0,0,0.06);">
+      <p style="font-size:10px; text-transform:uppercase; color:var(--color--gray);">WRITTEN BY {{ article.author | upcase }}</p>
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "Article",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

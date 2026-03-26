@@ -1,0 +1,58 @@
+{
+  "general": {
+    "meta": {
+      "page": "Page {{ page }}"
+    }
+  },
+  "accessibility": {
+    "skip_to_content": "Skip to content",
+    "close": "Close",
+    "open_menu": "Open menu",
+    "close_menu": "Close menu",
+    "cart_count": "{{ count }} items in your cart",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "unavailable": "Unavailable",
+      "choose_options": "Choose options",
+      "quantity": "Quantity"
+    },
+    "general": {
+      "sale_badge": "Sale",
+      "new_badge": "New"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Cart",
+      "empty": "Your cart is empty",
+      "item_count": {
+        "one": "{{ count }} item",
+        "other": "{{ count }} items"
+      }
+    }
+  },
+  "sections": {
+    "header": {
+      "menu": "Menu",
+      "search": "Search",
+      "cart": "Cart",
+      "account": "Account",
+      "login": "Login"
+    },
+    "footer": {
+      "newsletter_label": "Subscribe to our newsletter"
+    }
+  },
+  "templates": {
+    "404": {
+      "title": "Page not found",
+      "subtext": "The page you requested does not exist.",
+      "link": "Continue shopping"
+    }
+  }
+}

@@ -1,0 +1,182 @@
+{%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+{%- assign products_per_page = section.settings.products_per_page | default: 12 -%}
+{%- assign active_tag = current_tags | first -%}
+
+<div class="main-collection--root">
+
+  <!-- Page Header -->
+  <div class="main-collection--header">
+    <h1 class="main-collection--title">{{ collection.title | upcase }}</h1>
+    <div class="main-collection--sort">
+      <label class="collection-sort--label" for="sort-by">SORT BY</label>
+      <select
+        class="collection-sort--select"
+        id="sort-by"
+        name="sort_by"
+        onchange="window.location.href = '{{ collection.url }}?sort_by=' + this.value"
+        aria-label="Sort products"
+      >
+        {%- for option in collection.sort_options -%}
+          <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>
+            {{ option.name | upcase }}
+          </option>
+        {%- endfor -%}
+      </select>
+      <span class="main-collection--count">
+        {{ collection.products_count }}
+        {%- if collection.products_count == 1 -%} PRODUCT{%- else -%} PRODUCTS{%- endif -%}
+      </span>
+    </div>
+  </div>
+
+  {%- if collection.description != blank -%}
+    <p class="main-collection--description">{{ collection.description }}</p>
+  {%- endif -%}
+
+  <div class="main-collection--body">
+
+    <!-- Sidebar Filters -->
+    <aside class="collection-sidebar">
+      <button class="collection-sidebar--toggle" id="sidebar-toggle" aria-expanded="true" aria-controls="collection-sidebar-content">
+        FILTER
+        <svg width="10" height="6" viewBox="0 0 10 6" fill="currentColor" aria-hidden="true"><path d="M0 0l5 6 5-6z"/></svg>
+      </button>
+
+      <div class="collection-sidebar--content" id="collection-sidebar-content">
+
+        {%- if collection.all_tags.size > 0 -%}
+          <!-- Category tags -->
+          <div class="collection-sidebar--group">
+            <p class="collection-sidebar--group-heading">CATEGORY</p>
+            <ul class="collection-sidebar--links">
+              <li>
+                <a
+                  href="{{ collection.url }}"
+                  class="collection-sidebar--link{% if current_tags == blank %} is-active{% endif %}"
+                >
+                  All Products
+                  <span class="collection-sidebar--count">{{ collection.products_count }}</span>
+                </a>
+              </li>
+              {%- for tag in collection.all_tags -%}
+                <li>
+                  {%- if current_tags contains tag -%}
+                    <a href="{{ collection.url }}" class="collection-sidebar--link is-active">
+                      {{ tag }}
+                    </a>
+                  {%- else -%}
+                    <a href="{{ collection.url }}/{{ tag | handle }}" class="collection-sidebar--link">
+                      {{ tag }}
+                    </a>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <!-- Price Range (static links) -->
+        {%- if section.settings.show_price_filter -%}
+          <div class="collection-sidebar--group">
+            <p class="collection-sidebar--group-heading">PRICE</p>
+            <ul class="collection-sidebar--links">
+              <li><a href="{{ collection.url }}?sort_by=price-ascending" class="collection-sidebar--link">Low to High</a></li>
+              <li><a href="{{ collection.url }}?sort_by=price-descending" class="collection-sidebar--link">High to Low</a></li>
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <!-- Availability -->
+        <div class="collection-sidebar--group">
+          <p class="collection-sidebar--group-heading">AVAILABILITY</p>
+          <ul class="collection-sidebar--links">
+            <li><a href="{{ collection.url }}" class="collection-sidebar--link{% if current_tags == blank %} is-active{% endif %}">All</a></li>
+            <li><a href="{{ collection.url }}/available" class="collection-sidebar--link">In Stock</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </aside>
+
+    <!-- Products Grid -->
+    <div class="collection-main">
+      {%- paginate collection.products by products_per_page -%}
+
+        {%- if collection.products.size > 0 -%}
+          <div class="main-collection--grid">
+            {%- for product in collection.products -%}
+              {%- render 'product-card', product: product -%}
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <div class="main-collection--empty">
+            <p>No products found.</p>
+            <a href="{{ routes.all_products_collection_url }}" class="btn btn--secondary" style="margin-top:16px;">VIEW ALL PRODUCTS</a>
+          </div>
+        {%- endif -%}
+
+        <!-- Pagination -->
+        {%- if paginate.pages > 1 -%}
+          <nav class="main-collection--pagination" aria-label="Pagination">
+            {%- if paginate.previous -%}
+              <a class="pagination--link pagination--prev" href="{{ paginate.previous.url }}" aria-label="Previous page">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </a>
+            {%- else -%}
+              <span class="pagination--link pagination--prev" aria-disabled="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="15 18 9 12 15 6"/></svg>
+              </span>
+            {%- endif -%}
+
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a class="pagination--link" href="{{ part.url }}">{{ part.title }}</a>
+              {%- elsif part.title == paginate.current_page -%}
+                <span class="pagination--link is-active" aria-current="page">{{ part.title }}</span>
+              {%- else -%}
+                <span class="pagination--link">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+
+            {%- if paginate.next -%}
+              <a class="pagination--link pagination--next" href="{{ paginate.next.url }}" aria-label="Next page">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+            {%- else -%}
+              <span class="pagination--link pagination--next" aria-disabled="true">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </span>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+
+      {%- endpaginate -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection",
+  "tag": "section",
+  "class": "section-collection",
+  "settings": [
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 6,
+      "max": 24,
+      "step": 6,
+      "label": "Products per page",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price_filter",
+      "label": "Show price filter",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

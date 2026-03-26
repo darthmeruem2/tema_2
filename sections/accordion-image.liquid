@@ -1,0 +1,83 @@
+<div class="accordion-image--root">
+  <!-- Left: text + accordions -->
+  <div class="accordion-image--content">
+    {%- if section.settings.overline != blank -%}
+      <p class="accordion-image--overline">{{ section.settings.overline }}</p>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="accordion-image--heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    <div class="accordion-image--rows">
+      {%- for block in section.blocks -%}
+        <div class="collapsible-row--root" {{ block.shopify_attributes }}>
+          <button
+            class="collapsible-row--toggle"
+            aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+          >
+            {{ block.settings.heading | upcase }}
+            <span class="collapsible-row--icon" aria-hidden="true">
+              <span class="horizontal"></span>
+              <span class="vertical"></span>
+            </span>
+          </button>
+          <div class="collapsible-row--content" {% unless forloop.first %}style="height:0"{% endunless %}>
+            <div class="collapsible-row--inner">
+              {{ block.settings.content }}
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <!-- Right: image -->
+  <div class="accordion-image--image">
+    {%- if section.settings.image != blank -%}
+      <img
+        src="{{ section.settings.image | image_url: width: 1000 }}"
+        alt="{{ section.settings.image.alt | escape }}"
+        width="1000" height="800" loading="lazy"
+      >
+    {%- else -%}
+      <div class="accordion-image--placeholder"></div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Accordion + Image",
+  "tag": "section",
+  "class": "section-accordion-image",
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Accordion row",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Row heading", "default": "Safety" },
+        { "type": "richtext", "id": "content", "label": "Row content", "default": "<p>Every SHIEH formula is dermatologist-tested and clinically verified, safe for all skin types including sensitive skin.</p>" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "overline", "label": "Overline", "default": "With Advanced Premium Formulas" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Hello New You Beauty" },
+    { "type": "image_picker", "id": "image", "label": "Image" }
+  ],
+  "presets": [
+    {
+      "name": "Accordion + Image",
+      "settings": {
+        "overline": "With Advanced Premium Formulas",
+        "heading": "Hello New You Beauty"
+      },
+      "blocks": [
+        { "type": "row", "settings": { "heading": "Safety", "content": "<p>Every SHIEH formula is dermatologist-tested and clinically verified, safe for all skin types including sensitive skin.</p>" } },
+        { "type": "row", "settings": { "heading": "Quality", "content": "<p>We source only the highest-grade active ingredients from certified suppliers worldwide.</p>" } },
+        { "type": "row", "settings": { "heading": "Vegan", "content": "<p>All products are 100% vegan and cruelty-free. Never tested on animals, always kind to the earth.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

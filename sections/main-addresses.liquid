@@ -1,0 +1,100 @@
+<div class="main-page--root" style="max-width:760px;">
+
+  <div style="display:flex; align-items:baseline; justify-content:space-between; margin-bottom:var(--layout--spacing-large);">
+    <h1 class="main-page--title" style="margin-bottom:0;">MEUS ENDEREÇOS</h1>
+    <a href="/account" style="font-size:10px; text-transform:uppercase; letter-spacing:0.08em; color:var(--color--gray);">
+      ← VOLTAR
+    </a>
+  </div>
+
+  <!-- Add new address -->
+  <div style="margin-bottom:var(--layout--spacing-large);">
+    <h2 style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:var(--layout--spacing-medium);">
+      ADICIONAR ENDEREÇO
+    </h2>
+    {%- form 'customer_address', customer.new_address -%}
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+        <div>
+          <label style="display:block; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Nome</label>
+          <input type="text" name="address[first_name]" value="{{ form.first_name }}" style="width:100%; height:var(--input--height); padding:var(--input--padding); border:1px solid rgba(0,0,0,0.15); font-family:var(--font--paragraph--family); font-size:var(--font--nav--size); text-transform:uppercase; background:transparent; outline:none; box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="display:block; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Sobrenome</label>
+          <input type="text" name="address[last_name]" value="{{ form.last_name }}" style="width:100%; height:var(--input--height); padding:var(--input--padding); border:1px solid rgba(0,0,0,0.15); font-family:var(--font--paragraph--family); font-size:var(--font--nav--size); text-transform:uppercase; background:transparent; outline:none; box-sizing:border-box;">
+        </div>
+        <div style="grid-column:1/-1;">
+          <label style="display:block; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Endereço</label>
+          <input type="text" name="address[address1]" value="{{ form.address1 }}" style="width:100%; height:var(--input--height); padding:var(--input--padding); border:1px solid rgba(0,0,0,0.15); font-family:var(--font--paragraph--family); font-size:var(--font--nav--size); text-transform:uppercase; background:transparent; outline:none; box-sizing:border-box;">
+        </div>
+        <div style="grid-column:1/-1;">
+          <label style="display:block; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Complemento</label>
+          <input type="text" name="address[address2]" value="{{ form.address2 }}" style="width:100%; height:var(--input--height); padding:var(--input--padding); border:1px solid rgba(0,0,0,0.15); font-family:var(--font--paragraph--family); font-size:var(--font--nav--size); text-transform:uppercase; background:transparent; outline:none; box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="display:block; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">Cidade</label>
+          <input type="text" name="address[city]" value="{{ form.city }}" style="width:100%; height:var(--input--height); padding:var(--input--padding); border:1px solid rgba(0,0,0,0.15); font-family:var(--font--paragraph--family); font-size:var(--font--nav--size); text-transform:uppercase; background:transparent; outline:none; box-sizing:border-box;">
+        </div>
+        <div>
+          <label style="display:block; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;">CEP</label>
+          <input type="text" name="address[zip]" value="{{ form.zip }}" style="width:100%; height:var(--input--height); padding:var(--input--padding); border:1px solid rgba(0,0,0,0.15); font-family:var(--font--paragraph--family); font-size:var(--font--nav--size); text-transform:uppercase; background:transparent; outline:none; box-sizing:border-box;">
+        </div>
+        <div style="grid-column:1/-1; margin-top:8px;">
+          <button type="submit" class="btn btn--1">SALVAR ENDEREÇO</button>
+        </div>
+      </div>
+    {%- endform -%}
+  </div>
+
+  <!-- Existing addresses -->
+  {%- if customer.addresses.size > 0 -%}
+    <div style="padding-top:var(--layout--spacing-medium); border-top:1px solid rgba(0,0,0,0.06);">
+      <h2 style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:var(--layout--spacing-medium);">
+        ENDEREÇOS SALVOS
+      </h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:24px;">
+        {%- for address in customer.addresses -%}
+          <div style="padding:20px; border:1px solid rgba(0,0,0,0.08);">
+            {%- if address.id == customer.default_address.id -%}
+              <span style="display:inline-block; font-size:9px; text-transform:uppercase; letter-spacing:0.08em; background:var(--color--accent-1); color:#fff; padding:2px 8px; margin-bottom:12px;">
+                PRINCIPAL
+              </span>
+            {%- endif -%}
+            <address style="font-style:normal; font-size:11px; text-transform:uppercase; color:var(--color--body--light); line-height:1.8; margin-bottom:16px;">
+              {{ address.name }}<br>
+              {{ address.address1 }}<br>
+              {%- if address.address2 != blank -%}{{ address.address2 }}<br>{%- endif -%}
+              {{ address.city }}, {{ address.zip }}<br>
+              {{ address.country }}
+            </address>
+            <div style="display:flex; gap:12px; font-size:10px; text-transform:uppercase;">
+              {%- form 'customer_address', address -%}
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" style="background:none; border:none; padding:0; font-family:inherit; font-size:inherit; text-transform:inherit; color:var(--color--gray); cursor:pointer; border-bottom:1px solid currentColor;">
+                  REMOVER
+                </button>
+              {%- endform -%}
+              {%- unless address.id == customer.default_address.id -%}
+                {%- form 'customer_address', address -%}
+                  <input type="hidden" name="_method" value="put">
+                  <input type="hidden" name="address[default]" value="true">
+                  <button type="submit" style="background:none; border:none; padding:0; font-family:inherit; font-size:inherit; text-transform:inherit; color:var(--color--body); cursor:pointer; border-bottom:1px solid currentColor;">
+                    TORNAR PRINCIPAL
+                  </button>
+                {%- endform -%}
+              {%- endunless -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "Addresses",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

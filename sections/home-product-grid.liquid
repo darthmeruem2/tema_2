@@ -1,0 +1,158 @@
+<section class="home-product-grid">
+  <div class="home-product-grid--header">
+    <h2 class="home-product-grid--title">{{ section.settings.title }}</h2>
+    {%- if section.settings.collection != blank -%}
+      <a href="{{ collections[section.settings.collection].url }}" class="home-product-grid--view-all">View All</a>
+    {%- else -%}
+      <a href="/collections/all" class="home-product-grid--view-all">View All</a>
+    {%- endif -%}
+  </div>
+
+  {%- assign grid_products = collections[section.settings.collection].products -%}
+
+  <!-- Row 1: 3 equal tiles (products 1-3) -->
+  <div class="home-product-grid--row home-product-grid--row-1">
+    {%- for i in (0..2) -%}
+      {%- assign product = grid_products[i] -%}
+      {%- if product != blank -%}
+        <div class="product-tile">
+          <div class="product-tile--image" style="height:360px">
+            {%- if product.featured_image != blank -%}
+              {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title, class: 'product-tile--img' }}
+            {%- else -%}
+              <div class="img-placeholder">{{ product.title }}</div>
+            {%- endif -%}
+            {%- if product.available == false -%}
+              <span class="product-tile--badge product-tile--badge-sold">Sold Out</span>
+            {%- elsif product.compare_at_price > product.price -%}
+              <span class="product-tile--badge product-tile--badge-sale">Sale</span>
+            {%- endif -%}
+            <button
+              class="product-tile--quick-add"
+              data-variant-id="{{ product.first_available_variant.id }}"
+              aria-label="Quick add {{ product.title }}"
+            >
+              + Quick Add
+            </button>
+          </div>
+          <p class="product-tile--name">{{ product.title }}</p>
+          <p class="product-tile--cat">{{ product.type }}</p>
+          {%- if section.settings.show_price -%}
+            <div class="product-tile--prices">
+              <span class="product-tile--price">{{ product.price | money }}</span>
+              {%- if product.compare_at_price > product.price -%}
+                <span class="product-tile--was">{{ product.compare_at_price | money }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <div class="product-tile product-tile--empty">
+          <div class="product-tile--image" style="height:360px">
+            <div class="img-placeholder">Product</div>
+          </div>
+          <p class="product-tile--name">Product Name</p>
+          <p class="product-tile--cat">Category</p>
+          <div class="product-tile--prices">
+            <span class="product-tile--price">£00.00</span>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <!-- Row 2: 3 tiles with varied heights (products 4-6) -->
+  <div class="home-product-grid--row home-product-grid--row-2">
+    {%- assign row2_heights = "340,420,340" | split: "," -%}
+    {%- for j in (3..5) -%}
+      {%- assign product = grid_products[j] -%}
+      {%- assign height_index = j | minus: 3 -%}
+      {%- assign tile_height = row2_heights[height_index] -%}
+      {%- if product != blank -%}
+        <div class="product-tile">
+          <div class="product-tile--image" style="height:{{ tile_height }}px">
+            {%- if product.featured_image != blank -%}
+              {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title, class: 'product-tile--img' }}
+            {%- else -%}
+              <div class="img-placeholder">{{ product.title }}</div>
+            {%- endif -%}
+            {%- if product.available == false -%}
+              <span class="product-tile--badge product-tile--badge-sold">Sold Out</span>
+            {%- elsif product.compare_at_price > product.price -%}
+              <span class="product-tile--badge product-tile--badge-sale">Sale</span>
+            {%- endif -%}
+            <button
+              class="product-tile--quick-add"
+              data-variant-id="{{ product.first_available_variant.id }}"
+              aria-label="Quick add {{ product.title }}"
+            >
+              + Quick Add
+            </button>
+          </div>
+          <p class="product-tile--name">{{ product.title }}</p>
+          <p class="product-tile--cat">{{ product.type }}</p>
+          {%- if section.settings.show_price -%}
+            <div class="product-tile--prices">
+              <span class="product-tile--price">{{ product.price | money }}</span>
+              {%- if product.compare_at_price > product.price -%}
+                <span class="product-tile--was">{{ product.compare_at_price | money }}</span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- else -%}
+        <div class="product-tile product-tile--empty">
+          <div class="product-tile--image" style="height:{{ tile_height }}px">
+            <div class="img-placeholder">Product</div>
+          </div>
+          <p class="product-tile--name">Product Name</p>
+          <p class="product-tile--cat">Category</p>
+          <div class="product-tile--prices">
+            <span class="product-tile--price">£00.00</span>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home Product Grid",
+  "tag": "section",
+  "class": "home-product-grid-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "The Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products Per Row",
+      "min": 3,
+      "max": 6,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show Price",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Product Grid"
+    }
+  ]
+}
+{% endschema %}

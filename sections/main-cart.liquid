@@ -1,0 +1,173 @@
+<div class="main-cart--root">
+
+  <h1 class="main-cart--title">{{ 'cart.general.title' | t | upcase | default: 'YOUR CART' }}</h1>
+
+  {%- if cart.item_count > 0 -%}
+
+    <form action="/cart" method="post" data-cart-form>
+      <div class="main-cart--layout">
+
+        <!-- ── Cart Items ─────────────────────────────────── -->
+        <div class="cart-items--list">
+
+          {%- for item in cart.items -%}
+            <div class="cart-item--root" data-key="{{ item.key }}">
+
+              <!-- Image -->
+              <a class="cart-item--image-link" href="{{ item.url }}" aria-label="{{ item.product.title | escape }}">
+                {%- if item.image -%}
+                  <img
+                    src="{{ item.image | image_url: width: 216 }}"
+                    alt="{{ item.image.alt | default: item.product.title | escape }}"
+                    width="108"
+                    height="108"
+                    loading="lazy"
+                  >
+                {%- else -%}
+                  {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- endif -%}
+              </a>
+
+              <!-- Details -->
+              <div class="cart-item--details">
+
+                <div class="cart-item--top">
+                  <div>
+                    <p class="cart-item--title">
+                      <a href="{{ item.url }}">{{ item.product.title }}</a>
+                    </p>
+                    {%- unless item.product.has_only_default_variant -%}
+                      <p class="cart-item--variant">{{ item.variant.title }}</p>
+                    {%- endunless -%}
+                    {%- if item.selling_plan_allocation -%}
+                      <p class="cart-item--variant">{{ item.selling_plan_allocation.selling_plan.name }}</p>
+                    {%- endif -%}
+                  </div>
+                  <span class="cart-item--price">{{ item.final_line_price | money }}</span>
+                </div>
+
+                <div class="cart-item--bottom">
+                  <!-- Quantity -->
+                  <div class="cart-item--qty" role="group" aria-label="Quantity for {{ item.product.title | escape }}">
+                    <button
+                      type="button"
+                      class="cart-qty--btn"
+                      data-delta="-1"
+                      aria-label="Decrease quantity"
+                    >−</button>
+                    <input
+                      class="cart-qty--input"
+                      type="number"
+                      name="updates[]"
+                      value="{{ item.quantity }}"
+                      min="0"
+                      aria-label="Quantity"
+                      data-line="{{ forloop.index }}"
+                    >
+                    <button
+                      type="button"
+                      class="cart-qty--btn"
+                      data-delta="1"
+                      aria-label="Increase quantity"
+                    >+</button>
+                  </div>
+
+                  <!-- Remove -->
+                  <button
+                    type="button"
+                    class="cart-item--remove"
+                    data-line="{{ forloop.index }}"
+                    aria-label="Remove {{ item.product.title | escape }}"
+                  >
+                    Remove
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          {%- endfor -%}
+
+        </div>
+
+        <!-- ── Order Summary ──────────────────────────────── -->
+        <div class="cart-summary--root">
+          <h2 class="cart-summary--heading">ORDER SUMMARY</h2>
+
+          <div class="cart-summary--row">
+            <span>Subtotal ({{ cart.item_count }} items)</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+
+          {%- if cart.total_discount > 0 -%}
+            <div class="cart-summary--row" style="color:var(--color--success);">
+              <span>Discounts</span>
+              <span>-{{ cart.total_discount | money }}</span>
+            </div>
+          {%- endif -%}
+
+          <div class="cart-summary--row">
+            <span>Shipping</span>
+            <span style="color:var(--color--gray);">Calculated at checkout</span>
+          </div>
+
+          <div class="cart-summary--row is-total">
+            <span>TOTAL</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+
+          <p class="cart-summary--note">
+            Tax included. Shipping and discounts calculated at checkout.
+          </p>
+
+          <div class="cart-summary--actions">
+            <button type="submit" name="checkout" class="cart-checkout-btn">
+              PROCEED TO CHECKOUT
+            </button>
+            <a href="/collections/all" class="cart-continue-btn">
+              CONTINUE SHOPPING
+            </a>
+          </div>
+
+          {%- if section.settings.show_payment_icons -%}
+            <div style="margin-top:16px; display:flex; gap:6px; flex-wrap:wrap;">
+              {%- for type in shop.enabled_payment_types -%}
+                {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+
+      </div>
+    </form>
+
+  {%- else -%}
+
+    <!-- Empty Cart -->
+    <div class="cart-empty--root">
+      <h2 class="cart-empty--title">YOUR CART IS EMPTY</h2>
+      <p class="cart-empty--text">
+        Looks like you haven't added anything yet.<br>
+        Let us help you find the perfect routine.
+      </p>
+      <a href="/collections/all" class="btn btn--1">SHOP ALL PRODUCTS</a>
+    </div>
+
+  {%- endif -%}
+
+</div>
+
+{% schema %}
+{
+  "name": "Cart",
+  "tag": "section",
+  "class": "section-cart",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_payment_icons",
+      "label": "Show payment icons",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

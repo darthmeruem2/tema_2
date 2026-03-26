@@ -1,0 +1,17 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "show_newsletter": true,
+        "newsletter_placeholder": "Your email",
+        "newsletter_button": "Submit"
+      }
+    }
+  },
+  "order": ["main", "footer"]
+}

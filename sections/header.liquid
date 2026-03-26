@@ -1,0 +1,116 @@
+<header class="site-header" id="site-header">
+  <div class="site-header--inner">
+
+    <!-- Logo -->
+    <a href="{{ routes.root_url }}" class="site-header--logo" aria-label="{{ shop.name }}">
+      {%- if section.settings.logo != blank -%}
+        <img
+          src="{{ section.settings.logo | image_url: width: 300 }}"
+          alt="{{ shop.name }}"
+          width="150"
+          height="auto"
+          loading="eager"
+        >
+      {%- else -%}
+        <span class="site-header--wordmark">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
+
+    <!-- Desktop Navigation -->
+    <nav class="site-header--nav" aria-label="Main navigation">
+      {%- assign nav_menu = section.settings.menu | default: 'main-menu' -%}
+      {%- for link in linklists[nav_menu].links -%}
+        {%- if link.links.size > 0 -%}
+          <div class="site-header--nav-item has-dropdown">
+            <button class="site-header--nav-link dropdown-toggle" aria-expanded="false" aria-haspopup="true">
+              {{ link.title | upcase }}
+              <svg width="8" height="5" viewBox="0 0 8 5" fill="currentColor" aria-hidden="true"><path d="M0 0l4 5 4-5z"/></svg>
+            </button>
+            <div class="site-header--dropdown" role="menu">
+              {%- for child in link.links -%}
+                <a href="{{ child.url }}" class="site-header--dropdown-link" role="menuitem">{{ child.title | upcase }}</a>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- else -%}
+          <div class="site-header--nav-item">
+            <a
+              href="{{ link.url }}"
+              class="site-header--nav-link{% if link.active %} is-active{% endif %}"
+              {% if link.active %}aria-current="page"{% endif %}
+            >{{ link.title | upcase }}</a>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    <!-- Icons -->
+    <div class="site-header--icons">
+      <a href="{{ routes.search_url }}" class="site-header--icon-btn" aria-label="Search">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </a>
+
+      {%- if customer -%}
+        <a href="{{ routes.account_url }}" class="site-header--icon-btn" aria-label="My account">
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}" class="site-header--icon-btn" aria-label="Login">
+      {%- endif -%}
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+        </svg>
+      </a>
+
+      <a href="{{ routes.cart_url }}" class="site-header--icon-btn site-header--cart-btn" aria-label="Cart, {{ cart.item_count }} items">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        {%- if cart.item_count > 0 -%}
+          <span class="site-header--cart-count cart-count-badge">{{ cart.item_count }}</span>
+        {%- endif -%}
+      </a>
+
+      <button class="site-header--mobile-toggle" id="mobile-menu-toggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- Mobile navigation drawer -->
+  <div class="site-header--mobile-nav" id="mobile-nav" aria-hidden="true">
+    <nav>
+      {%- for link in linklists[nav_menu].links -%}
+        <a href="{{ link.url }}" class="mobile-nav-link{% if link.active %} is-active{% endif %}">{{ link.title | upcase }}</a>
+      {%- endfor -%}
+    </nav>
+    <div class="mobile-nav-utils">
+      <a href="{{ routes.search_url }}">SEARCH</a>
+      <a href="{{ routes.cart_url }}">CART ({{ cart.item_count }})</a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "tag": "section",
+  "class": "section-header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,20 @@
+<div class="text-banner--root">
+  <p class="text-banner--text">{{ section.settings.text }}</p>
+</div>
+
+{% schema %}
+{
+  "name": "Text Banner",
+  "tag": "section",
+  "class": "section-text-banner",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Quote text",
+      "default": "Open your mind to the possibility of new, refreshed skin — only with SHIEH"
+    }
+  ],
+  "presets": [{ "name": "Text Banner" }]
+}
+{% endschema %}

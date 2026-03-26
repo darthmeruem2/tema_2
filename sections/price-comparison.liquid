@@ -1,0 +1,105 @@
+<section class="price-comparison">
+  <div class="price-comparison--header">
+    {%- if section.settings.overline != blank -%}
+      <span class="price-comparison--overline">{{ section.settings.overline }}</span>
+    {%- endif -%}
+    <h2 class="price-comparison--heading">{{ section.settings.heading }}</h2>
+  </div>
+
+  <div class="price-comparison--cards">
+
+    <div class="price-comparison--card price-comparison--card-competitor">
+      <div class="price-comparison--card-label">{{ section.settings.competitor_label }}</div>
+      <div class="price-comparison--card-price">{{ section.settings.competitor_price }}</div>
+      <div class="price-comparison--card-ingredient">{{ section.settings.ingredient_name }}</div>
+      <ul class="price-comparison--card-features">
+        <li class="price-comparison--feature price-comparison--feature-no">Concentration disclosed</li>
+        <li class="price-comparison--feature price-comparison--feature-no">Full INCI published</li>
+        <li class="price-comparison--feature price-comparison--feature-no">Clinically active dose</li>
+        <li class="price-comparison--feature price-comparison--feature-yes">Prestige packaging</li>
+      </ul>
+    </div>
+
+    <div class="price-comparison--card price-comparison--card-shieh">
+      <div class="price-comparison--card-badge">SHIEH</div>
+      <div class="price-comparison--card-label">{{ section.settings.shieh_label }}</div>
+      <div class="price-comparison--card-price">{{ section.settings.shieh_price }}</div>
+      <div class="price-comparison--card-ingredient">
+        {{ section.settings.ingredient_name }}
+        {%- if section.settings.shieh_note != blank -%}
+          <span class="price-comparison--card-note">{{ section.settings.shieh_note }}</span>
+        {%- endif -%}
+      </div>
+      <ul class="price-comparison--card-features">
+        <li class="price-comparison--feature price-comparison--feature-yes">Concentration disclosed</li>
+        <li class="price-comparison--feature price-comparison--feature-yes">Full INCI published</li>
+        <li class="price-comparison--feature price-comparison--feature-yes">Clinically active dose</li>
+        <li class="price-comparison--feature price-comparison--feature-no">Prestige packaging</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Price Comparison",
+  "tag": "section",
+  "class": "price-comparison-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "overline",
+      "label": "Overline",
+      "default": "The honest truth"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Same Ingredient. Fraction of the Price."
+    },
+    {
+      "type": "text",
+      "id": "competitor_label",
+      "label": "Competitor Label",
+      "default": "Premium Brands"
+    },
+    {
+      "type": "text",
+      "id": "competitor_price",
+      "label": "Competitor Price",
+      "default": "£80"
+    },
+    {
+      "type": "text",
+      "id": "shieh_label",
+      "label": "SHIEH Label",
+      "default": "SHIEH"
+    },
+    {
+      "type": "text",
+      "id": "shieh_price",
+      "label": "SHIEH Price",
+      "default": "£24"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_name",
+      "label": "Ingredient Name",
+      "default": "Niacinamide 5%"
+    },
+    {
+      "type": "text",
+      "id": "shieh_note",
+      "label": "SHIEH Note",
+      "default": "Same molecule"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Price Comparison"
+    }
+  ]
+}
+{% endschema %}

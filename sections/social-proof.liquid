@@ -1,0 +1,124 @@
+<section class="social-proof">
+  <div class="social-proof--header">
+    {%- if section.settings.overline != blank -%}
+      <span class="social-proof--overline">{{ section.settings.overline }}</span>
+    {%- endif -%}
+    <h2 class="social-proof--heading">{{ section.settings.heading }}</h2>
+  </div>
+
+  <div class="social-proof--cards">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'review' -%}
+        <div class="social-proof--card" {{ block.shopify_attributes }}>
+          <div class="social-proof--stars">
+            {%- assign full_stars = block.settings.rating | floor -%}
+            {%- for s in (1..5) -%}
+              {%- if s <= full_stars -%}
+                <span class="social-proof--star social-proof--star-full">★</span>
+              {%- else -%}
+                <span class="social-proof--star social-proof--star-empty">☆</span>
+              {%- endif -%}
+            {%- endfor -%}
+            <span class="social-proof--rating-num">{{ block.settings.rating }}</span>
+          </div>
+          <blockquote class="social-proof--text">{{ block.settings.text }}</blockquote>
+          <div class="social-proof--author-wrap">
+            <span class="social-proof--author">{{ block.settings.author }}</span>
+            {%- if block.settings.location != blank -%}
+              <span class="social-proof--location">{{ block.settings.location }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Social Proof",
+  "tag": "section",
+  "class": "social-proof-section",
+  "max_blocks": 9,
+  "settings": [
+    {
+      "type": "text",
+      "id": "overline",
+      "label": "Overline",
+      "default": "What Our Customers Say"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Verified Reviews"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Author Name"
+        },
+        {
+          "type": "text",
+          "id": "location",
+          "label": "Location"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review Text"
+        },
+        {
+          "type": "range",
+          "id": "rating",
+          "label": "Rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Proof",
+      "blocks": [
+        {
+          "type": "review",
+          "settings": {
+            "author": "Amara T.",
+            "location": "London, E8",
+            "rating": 5,
+            "text": "I'm a nurse. I read every INCI list. SHIEH is the first brand that hasn't tried to hide a thing. The Niacinamide Gel cleared my texture in three weeks — at a percentage I could actually verify."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Caitlin M.",
+            "location": "Edinburgh, EH4",
+            "rating": 5,
+            "text": "Spent years buying £70 serums and not knowing why they weren't working. Turns out: proprietary blends with 0.3% active. SHIEH's Niacinamide Gel listed 5% — on the label. It works."
+          }
+        },
+        {
+          "type": "review",
+          "settings": {
+            "author": "Priya K.",
+            "location": "Manchester, M14",
+            "rating": 5,
+            "text": "The AHA Peel is the first exfoliant I've used without guessing whether the concentration was real. Skin looked genuinely smoother in eight days. I've already sent the link to four friends."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,18 @@
+{
+  "sections": {
+    "contact": {
+      "type": "main-contact",
+      "settings": {
+        "heading": "Contact Us",
+        "subheading": "Have a question about our products? We'd love to hear from you. Send us a message and we'll respond within 24 hours."
+      }
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "show_newsletter": true
+      }
+    }
+  },
+  "order": ["contact", "footer"]
+}

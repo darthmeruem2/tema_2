@@ -1,0 +1,23 @@
+{%- comment -%}
+  Snippet: collapsible-row.liquid
+  Usage: {%- render 'collapsible-row', block: block -%}
+{%- endcomment -%}
+
+<div class="collapsible-row--root" {{ block.shopify_attributes }}>
+  <button
+    class="collapsible-row--toggle"
+    aria-expanded="false"
+    aria-controls="row-{{ block.id }}"
+  >
+    <span class="collapsible-row--label">{{ block.settings.heading | upcase }}</span>
+    <span class="collapsible-row--icon" aria-hidden="true">
+      <span class="collapsible-row--icon-h"></span>
+      <span class="collapsible-row--icon-v"></span>
+    </span>
+  </button>
+  <div class="collapsible-row--wrapper" id="row-{{ block.id }}">
+    <div class="collapsible-row--content">
+      {{ block.settings.content }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,132 @@
+<div class="testimonials--root">
+  <div class="testimonials--wrapper">
+
+    <div class="testimonials--header">
+      {%- if section.settings.overline != blank -%}
+        <p class="testimonials--overline">{{ section.settings.overline | upcase }}</p>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="testimonials--title">{{ section.settings.heading | upcase }}</h2>
+      {%- endif -%}
+    </div>
+
+    <div class="testimonials--grid">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'testimonial' -%}
+          <div class="testimonials--card" {{ block.shopify_attributes }}>
+
+            <!-- Stars -->
+            <div class="testimonials--stars" aria-label="{{ block.settings.rating }} out of 5 stars">
+              {%- assign rating = block.settings.rating | default: 5 | plus: 0 -%}
+              {%- for i in (1..5) -%}
+                <svg viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M6 1l1.39 2.81L10.5 4.27l-2.25 2.19.53 3.1L6 8l-2.78 1.56.53-3.1L1.5 4.27l3.11-.46L6 1z"
+                        {%- if i <= rating -%} fill="currentColor"{%- else -%} fill="none" stroke="currentColor" stroke-width="0.8"{%- endif -%}/>
+                </svg>
+              {%- endfor -%}
+            </div>
+
+            <!-- Text -->
+            {%- if block.settings.text != blank -%}
+              <p class="testimonials--text">"{{ block.settings.text }}"</p>
+            {%- endif -%}
+
+            <!-- Author -->
+            {%- if block.settings.author != blank -%}
+              <p class="testimonials--author">— {{ block.settings.author | upcase }}</p>
+            {%- endif -%}
+
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "class": "section-testimonials",
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "range",
+          "id": "rating",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "label": "Star rating",
+          "default": 5
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Review text",
+          "default": "This product has completely transformed my skin. I've noticed a visible difference in just two weeks."
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "Reviewer name",
+          "default": "Sarah M., London"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "overline",
+      "label": "Overline",
+      "default": "Our Customers' Skincare Journeys"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Real Results, Real Stories"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonials",
+      "settings": {
+        "overline": "Our Customers' Skincare Journeys",
+        "heading": "Real Results, Real Stories"
+      },
+      "blocks": [
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "SHIEH's Glow Radiance Sérum is a game-changer. My skin looks brighter and feels incredibly soft after just one week.",
+            "author": "Emma K., Manchester"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "Finally a barrier cream that doesn't feel heavy. Perfect for my sensitive skin — no more redness or flaking.",
+            "author": "James L., Edinburgh"
+          }
+        },
+        {
+          "type": "testimonial",
+          "settings": {
+            "rating": 5,
+            "text": "The Eye Lift Concentrate is worth every penny. Dark circles visibly reduced after 10 days. I'm obsessed.",
+            "author": "Priya S., London"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

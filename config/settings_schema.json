@@ -1,0 +1,99 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "SHIEH",
+    "theme_version": "1.0.0",
+    "theme_author": "SHIEH",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo image",
+        "info": "Recommended size: 326 × 36px"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon",
+        "info": "32 × 32px .ico, .jpg or .png"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_accent_1",
+        "label": "Primary accent (SHIEH Gold)",
+        "default": "#E3AE00"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_2",
+        "label": "Secondary accent (Warm Beige)",
+        "default": "#f4efe8"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_3",
+        "label": "Tertiary accent (Rose)",
+        "default": "#af457f"
+      },
+      {
+        "type": "color",
+        "id": "color_body",
+        "label": "Body text color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_body",
+        "label": "Page background",
+        "default": "#ffffff"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "default": "inter_n7"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body font",
+        "default": "inter_n4"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest URL"
+      }
+    ]
+  }
+]

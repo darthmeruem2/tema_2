@@ -1,0 +1,153 @@
+<div class="image-with-text--root">
+  <div class="image-with-text--wrapper layout--{{ section.settings.layout | default: 'text-image' }}">
+
+    <!-- Text Column -->
+    <div class="image-with-text--text">
+      <div class="section-blocks--wrapper">
+
+        {%- if section.settings.overline != blank -%}
+          <p class="section-blocks--overline">{{ section.settings.overline | upcase }}</p>
+        {%- endif -%}
+
+        {%- if section.settings.heading != blank -%}
+          <h2 class="section-blocks--title">{{ section.settings.heading | upcase }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.text != blank -%}
+          <div class="section-blocks--paragraph">{{ section.settings.text }}</div>
+        {%- endif -%}
+
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'step' -%}
+            <div style="display:flex; flex-direction:column; gap:12px;" {{ block.shopify_attributes }}>
+              {%- if block.settings.step_number != blank -%}
+                <span style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:var(--color--accent-1);">
+                  STEP {{ block.settings.step_number }}
+                </span>
+              {%- endif -%}
+              {%- if block.settings.step_text != blank -%}
+                <p style="font-size:10px; text-transform:uppercase; line-height:1.7; color:var(--color--body--light);">
+                  {{ block.settings.step_text | upcase }}
+                </p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if section.settings.button_label != blank -%}
+          <div class="section-blocks--button-group">
+            <a class="btn btn--1" href="{{ section.settings.button_link | default: '#' }}">
+              {{ section.settings.button_label | upcase }}
+            </a>
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+
+    <!-- Image Column -->
+    <div class="image-with-text--image">
+      {%- if section.settings.image != blank -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 736 }}"
+          srcset="{{ section.settings.image | image_url: width: 368 }} 368w,
+                  {{ section.settings.image | image_url: width: 736 }} 736w"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          width="368"
+          height="550"
+          loading="lazy"
+        >
+      {%- else -%}
+        {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Image with Text",
+  "tag": "section",
+  "class": "section-image-with-text",
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "step_number",
+          "label": "Step number",
+          "default": "01"
+        },
+        {
+          "type": "textarea",
+          "id": "step_text",
+          "label": "Step description",
+          "default": "Apply a small amount to your fingertips and gently massage into skin."
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "text-image", "label": "Text left, image right" },
+        { "value": "image-text", "label": "Image left, text right" }
+      ],
+      "default": "text-image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image",
+      "info": "Recommended: 368 × 550px"
+    },
+    {
+      "type": "text",
+      "id": "overline",
+      "label": "Overline",
+      "default": "How to use"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Glow Guide"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Body text"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image with Text",
+      "settings": {
+        "overline": "How to use",
+        "heading": "Glow Guide"
+      },
+      "blocks": [
+        { "type": "step", "settings": { "step_number": "01", "step_text": "Cleanse your face with lukewarm water to open pores." } },
+        { "type": "step", "settings": { "step_number": "02", "step_text": "Apply a pea-sized amount and gently massage in upward circular motions." } },
+        { "type": "step", "settings": { "step_number": "03", "step_text": "Allow to absorb for 60 seconds before applying SPF." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

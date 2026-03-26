@@ -1,0 +1,44 @@
+{%- assign col = collections[section.settings.collection] -%}
+{%- assign limit = section.settings.product_limit | default: 6 -%}
+
+<div class="featured-collection--root">
+  {%- if section.settings.heading != blank -%}
+    <p class="featured-collection--heading">{{ section.settings.heading | upcase }}</p>
+  {%- endif -%}
+
+  <div class="featured-collection--grid">
+    {%- if col != blank and col.products.size > 0 -%}
+      {%- for product in col.products limit: limit -%}
+        {%- render 'product-card', product: product -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..6) -%}
+        <div class="product-card--root">
+          <div class="product-card--image-wrapper">
+            {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+          <div class="product-card--details">
+            <p class="product-card--title">SHIEH Product {{ i }}</p>
+            <div class="product--price-container">
+              <span class="product--price">£45.00</span>
+            </div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Collection",
+  "tag": "section",
+  "class": "section-featured-collection",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Best Sellers" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "product_limit", "min": 3, "max": 9, "step": 3, "label": "Products to show", "default": 6 }
+  ],
+  "presets": [{ "name": "Featured Collection", "settings": { "heading": "Best Sellers" } }]
+}
+{% endschema %}

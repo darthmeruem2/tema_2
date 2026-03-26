@@ -1,0 +1,37 @@
+<div class="brand-manifesto brand-manifesto--{{ section.settings.size }}">
+  <div class="brand-manifesto--inner">
+    <p class="brand-manifesto--text">{{ section.settings.text }}</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brand Manifesto",
+  "tag": "div",
+  "class": "brand-manifesto-section",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Manifesto Text",
+      "default": "We list every ingredient. Every percentage. Every time. Because honest skincare shouldn't be a luxury."
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Text Size",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ],
+      "default": "medium"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brand Manifesto"
+    }
+  ]
+}
+{% endschema %}

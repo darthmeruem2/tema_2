@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "trust_bar": { "type": "trust-bar", "settings": {} },
+    "collection": { "type": "main-collection", "settings": {} },
+    "footer": { "type": "footer", "settings": {} }
+  },
+  "order": ["trust_bar","collection","footer"]
+}

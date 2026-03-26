@@ -1,0 +1,86 @@
+<div class="main-contact--root">
+  <h1 class="main-contact--heading">{{ section.settings.heading | default: 'Contact Us' | upcase }}</h1>
+  {%- if section.settings.subheading != blank -%}
+    <p class="main-contact--subheading">{{ section.settings.subheading }}</p>
+  {%- endif -%}
+
+  {%- form 'contact' -%}
+    {%- if form.posted_successfully? -%}
+      <p class="form-success" style="color: green; font-size: 11px; margin-bottom: 24px;">
+        {{ 'contact.form.post_success' | t | default: 'Your message has been sent. Thank you!' }}
+      </p>
+    {%- endif -%}
+
+    {%- if form.errors -%}
+      <p class="form-errors" style="color: #c0392b; font-size: 11px; margin-bottom: 24px;">
+        {{ form.errors | default_errors }}
+      </p>
+    {%- endif -%}
+
+    <div class="contact-form--field">
+      <label class="contact-form--label" for="contact-name">Name</label>
+      <input
+        class="contact-form--input"
+        type="text"
+        id="contact-name"
+        name="contact[name]"
+        value="{{ form.name }}"
+        autocomplete="name"
+        required
+      >
+    </div>
+
+    <div class="contact-form--field">
+      <label class="contact-form--label" for="contact-email">Email</label>
+      <input
+        class="contact-form--input"
+        type="email"
+        id="contact-email"
+        name="contact[email]"
+        value="{{ form.email }}"
+        autocomplete="email"
+        required
+      >
+    </div>
+
+    <div class="contact-form--field">
+      <label class="contact-form--label" for="contact-phone">Phone (optional)</label>
+      <input
+        class="contact-form--input"
+        type="tel"
+        id="contact-phone"
+        name="contact[phone]"
+        value="{{ form.phone }}"
+        autocomplete="tel"
+      >
+    </div>
+
+    <div class="contact-form--field">
+      <label class="contact-form--label" for="contact-message">Message</label>
+      <textarea
+        class="contact-form--textarea"
+        id="contact-message"
+        name="contact[body]"
+        rows="5"
+        required
+      >{{ form.body }}</textarea>
+    </div>
+
+    <div class="contact-form--submit">
+      <button type="submit" class="btn btn--primary">SEND MESSAGE</button>
+    </div>
+  {%- endform -%}
+</div>
+
+{% schema %}
+{
+  "name": "Contact Form",
+  "tag": "section",
+  "class": "section-contact",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Contact Us" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Have a question? We'd love to hear from you. Send us a message and we'll respond as soon as possible." }
+  ],
+  "presets": [{ "name": "Contact Form" }]
+}
+{% endschema %}

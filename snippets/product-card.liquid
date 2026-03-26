@@ -1,0 +1,113 @@
+{%- comment -%}
+  Snippet: product-card.liquid
+  Usage: {%- render 'product-card', product: product -%}
+{%- endcomment -%}
+
+{%- assign first_variant = product.first_available_variant | default: product.variants.first -%}
+
+<product-card class="product-card--root" data-product-id="{{ product.id }}">
+
+  <!-- Product Image -->
+  <a
+    class="product-card--image-wrapper"
+    href="{{ product.url }}"
+    aria-label="{{ product.title | escape }}"
+    tabindex="-1"
+  >
+    {%- if product.featured_image != blank -%}
+      <img
+        class="product-card--image"
+        src="{{ product.featured_image | image_url: width: 600 }}"
+        srcset="{{ product.featured_image | image_url: width: 400 }} 400w,
+                {{ product.featured_image | image_url: width: 600 }} 600w,
+                {{ product.featured_image | image_url: width: 800 }} 800w"
+        sizes="(max-width: 600px) 75vw, (max-width: 1024px) 50vw, 33vw"
+        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+        width="600"
+        height="750"
+        loading="lazy"
+      >
+
+      {%- if product.images.size > 1 -%}
+        <img
+          class="product-card--hover-image"
+          src="{{ product.images[1] | image_url: width: 600 }}"
+          alt="{{ product.images[1].alt | default: product.title | escape }}"
+          width="600"
+          height="750"
+          loading="lazy"
+        >
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg product-card--image' }}
+    {%- endif -%}
+
+    <!-- Quick Add Button -->
+    <product-quick-add class="product-quick-add">
+      <button
+        class="product-quick-add--button"
+        data-variant-id="{{ first_variant.id }}"
+        {% unless first_variant.available %}disabled{% endunless %}
+        aria-label="Add {{ product.title | escape }} to cart"
+      >
+        <div class="product-quick-add--text">
+          {%- if first_variant.available -%}
+            Choose options
+          {%- else -%}
+            Sold out
+          {%- endif -%}
+        </div>
+      </button>
+    </product-quick-add>
+
+  </a>
+
+  <!-- Product Details -->
+  <div class="product-card--details">
+    <div class="product-card--details-wrapper">
+      <a class="product-card--title-link" href="{{ product.url }}">
+        <p class="product-card--title">{{ product.title }}</p>
+      </a>
+
+      {%- if product.variants.size > 1 -%}
+        {%- assign color_option = product.options_with_values | where: 'name', 'Color' | first -%}
+        {%- if color_option -%}
+          <div class="product-card--swatches--horizontal-view">
+            <div class="swatches--container">
+              {%- for value in color_option.values limit: 5 -%}
+                <label class="swatch">
+                  <input
+                    class="swatch--input"
+                    type="radio"
+                    name="color-{{ product.id }}"
+                    value="{{ value | escape }}"
+                    {% if forloop.first %}checked{% endif %}
+                    style="background-color: {{ value | downcase | replace: ' ', '' }};"
+                    aria-label="{{ value }}"
+                  >
+                </label>
+              {%- endfor -%}
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    <!-- Price -->
+    <div class="product--price-container">
+      {%- if product.compare_at_price > product.price -%}
+        <span class="product--price product--price--sale">
+          {{ product.price | money }}
+        </span>
+        <span class="product--price product--price--was">
+          {{ product.compare_at_price | money }}
+        </span>
+      {%- else -%}
+        <span class="product--price">
+          {{ product.price | money }}
+        </span>
+      {%- endif -%}
+    </div>
+  </div>
+
+</product-card>

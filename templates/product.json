@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "product": { "type": "main-product", "settings": {} },
+    "price_comp": { "type": "price-comparison", "settings": {} },
+    "ingredients": { "type": "ingredient-map", "settings": {} },
+    "related": { "type": "related-products", "settings": {} },
+    "footer": { "type": "footer", "settings": {} }
+  },
+  "order": ["product","price_comp","ingredients","related","footer"]
+}

@@ -1,0 +1,392 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign featured_media = product.featured_media -%}
+
+{%- comment -%} Build variants JSON for JS {%- endcomment -%}
+{%- capture variants_json -%}
+[{%- for variant in product.variants -%}
+  {"id":{{ variant.id }},"title":{{ variant.title | json }},"available":{{ variant.available }},"price":{{ variant.price }},"compare_at_price":{{ variant.compare_at_price | json }},"option1":{{ variant.option1 | json }},"option2":{{ variant.option2 | json }},"option3":{{ variant.option3 | json }},"featured_image":{{ variant.featured_image.src | json }}}{% unless forloop.last %},{% endunless %}
+{%- endfor -%}]
+{%- endcapture -%}
+
+<div class="main-product--root">
+  <div class="main-product--wrapper">
+
+    <!-- ── GALLERY (Desktop) ───────────────────────────────── -->
+    <div class="main-product--desktop">
+      <div class="product-media--container">
+
+        {%- comment -%} Sale badge {%- endcomment -%}
+        {%- if current_variant.compare_at_price > current_variant.price -%}
+          {%- assign discount = current_variant.compare_at_price | minus: current_variant.price | times: 100 | divided_by: current_variant.compare_at_price | round -%}
+        {%- endif -%}
+
+        {%- if product.images.size > 0 -%}
+          {%- for image in product.images -%}
+            <div class="product-media--root">
+              {%- if forloop.first and discount > 0 -%}
+                <div class="product--labels">
+                  <div class="product--label product--label--sale">{{ discount }}% OFF</div>
+                </div>
+              {%- endif -%}
+              <img
+                src="{{ image | image_url: width: 1022 }}"
+                srcset="{{ image | image_url: width: 511 }} 511w,
+                        {{ image | image_url: width: 1022 }} 1022w"
+                alt="{{ image.alt | default: product.title | escape }}"
+                width="511"
+                height="511"
+                loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              >
+            </div>
+          {%- endfor -%}
+        {%- else -%}
+          <div class="product-media--root">
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        {%- endif -%}
+
+      </div>
+    </div>
+
+    <!-- ── GALLERY (Mobile Carousel) ──────────────────────── -->
+    <div class="main-product--mobile">
+      <div class="product-mobile-carousel">
+        {%- if current_variant.compare_at_price > current_variant.price and discount > 0 -%}
+          <div class="product--labels">
+            <div class="product--label product--label--sale">{{ discount }}% OFF</div>
+          </div>
+        {%- endif -%}
+        <div class="carousel--container">
+          {%- if product.images.size > 0 -%}
+            {%- for image in product.images -%}
+              <div class="carousel--slide">
+                <img
+                  src="{{ image | image_url: width: 800 }}"
+                  alt="{{ image.alt | default: product.title | escape }}"
+                  loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+                >
+              </div>
+            {%- endfor -%}
+          {%- else -%}
+            <div class="carousel--slide">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="product-mobile-carousel--nav">
+        <button class="product-mobile-carousel--btn" data-gallery-prev aria-label="Previous image">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <span class="product-mobile-carousel--counter">
+          <span class="product-mobile-carousel--current">1</span>
+          <span> / {{ product.images.size | default: 1 }}</span>
+        </span>
+        <button class="product-mobile-carousel--btn" data-gallery-next aria-label="Next image">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ── PRODUCT FORM ────────────────────────────────────── -->
+    <form
+      class="product-form"
+      action="/cart/add"
+      method="post"
+      enctype="multipart/form-data"
+      data-product-form
+      data-variants="{{ variants_json | escape }}"
+    >
+
+      {%- comment -%} Breadcrumbs {%- endcomment -%}
+      <div class="product--breadcrumbs">
+        <ul class="breadcrumbs--root">
+          <li><a href="/">Home</a></li>
+          <li class="breadcrumbs--separator">•</li>
+          <li><a href="/collections/all">All Products</a></li>
+          <li class="breadcrumbs--separator">•</li>
+          <li class="current">{{ product.title }}</li>
+        </ul>
+      </div>
+
+      {%- comment -%} Vendor {%- endcomment -%}
+      {%- if product.vendor != blank -%}
+        <div class="product-form--block product-form--vendor">
+          <a href="/collections/vendor?q={{ product.vendor | url_encode }}">{{ product.vendor | upcase }}</a>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Title {%- endcomment -%}
+      <div class="product-form--block">
+        <h1 class="product-form--title">{{ product.title | upcase }}</h1>
+      </div>
+
+      {%- comment -%} Rating (stars — decorative; connect to review app for live data) {%- endcomment -%}
+      {%- if section.settings.show_rating -%}
+        <div class="product-form--block">
+          <div class="product-rating--root">
+            <div class="product-rating--stars">
+              {%- for i in (1..5) -%}
+                <svg class="star-icon" viewBox="0 0 12 12" aria-hidden="true">
+                  <path d="M6 1l1.39 2.81L10.5 4.27l-2.25 2.19.53 3.1L6 8l-2.78 1.56.53-3.1L1.5 4.27l3.11-.46L6 1z"/>
+                </svg>
+              {%- endfor -%}
+            </div>
+            <span class="product-rating--count">({{ product.metafields.reviews.rating_count | default: 0 }})</span>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Price {%- endcomment -%}
+      <div class="product-form--block">
+        <div class="product-price--wrapper">
+          <span class="product-price--current{% if current_variant.compare_at_price > current_variant.price %} product-price--sale{% endif %}">
+            {{ current_variant.price | money }}
+          </span>
+          {%- if current_variant.compare_at_price > current_variant.price -%}
+            <span class="product-price--was">{{ current_variant.compare_at_price | money }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} Variant Options {%- endcomment -%}
+      {%- unless product.has_only_default_variant -%}
+        <div class="product-form--block">
+          {%- for option in product.options_with_values -%}
+            <div class="product-options--option">
+              <div class="radios--header">
+                <span class="radios--label-text">{{ option.name | upcase }}</span>
+                <span class="radios--selected-value">{{ option.selected_value | upcase }}</span>
+              </div>
+              <div class="radios--container">
+                {%- for value in option.values -%}
+                  {%- assign is_available = false -%}
+                  {%- for variant in product.variants -%}
+                    {%- if variant.option1 == value or variant.option2 == value or variant.option3 == value -%}
+                      {%- if variant.available -%}
+                        {%- assign is_available = true -%}
+                      {%- endif -%}
+                    {%- endif -%}
+                  {%- endfor -%}
+                  <label
+                    class="radios--value-button{% unless is_available %} is-unavailable{% endunless %}{% if option.selected_value == value %} is-selected{% endif %}"
+                    data-option-index="{{ forloop.parentloop.index0 }}"
+                    data-value="{{ value | escape }}"
+                    title="{{ value }}{% unless is_available %} — Sold out{% endunless %}"
+                  >
+                    <span class="radios--text">{{ value | upcase }}</span>
+                    <input
+                      class="radios--input"
+                      type="radio"
+                      name="option{{ forloop.parentloop.index }}"
+                      value="{{ value | escape }}"
+                      {% if option.selected_value == value %}checked{% endif %}
+                    >
+                  </label>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endunless -%}
+
+      {%- comment -%} Hidden variant ID {%- endcomment -%}
+      <input type="hidden" name="id" value="{{ current_variant.id }}">
+      <input type="hidden" name="quantity" value="1">
+
+      {%- comment -%} Buy Buttons {%- endcomment -%}
+      <div class="product-form--block">
+        <div class="product-buy-buttons--root">
+          <button
+            type="submit"
+            class="product-buy-buttons--primary"
+            {% unless current_variant.available %}disabled{% endunless %}
+            aria-label="Add {{ product.title | escape }} to cart"
+          >
+            <span class="product-buy-buttons--cta-text">
+              {%- if current_variant.available -%}ADD TO CART{%- else -%}SOLD OUT{%- endif -%}
+            </span>
+          </button>
+
+          {%- if section.settings.show_dynamic_checkout -%}
+            <div class="product-buy-buttons--smart">
+              {{ form | payment_button }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} Store Pickup {%- endcomment -%}
+      {%- if section.settings.show_pickup -%}
+        <div class="product-form--block product-pickup--root">
+          <div class="pickup--container">
+            <div class="pickup--icon">
+              <svg viewBox="0 0 16 16" fill="none" stroke="#4caf50" stroke-width="1.5">
+                <path d="M2 8 L6 12 L14 4"/>
+              </svg>
+            </div>
+            <div>
+              <p class="pickup--title">
+                PICKUP AVAILABLE AT <strong>{{ section.settings.pickup_store | default: 'SHIEH STUDIO' }}</strong>
+              </p>
+              <p class="pickup--ready">USUALLY READY IN {{ section.settings.pickup_time | default: '24 HOURS' | upcase }}</p>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Description {%- endcomment -%}
+      {%- if product.description != blank -%}
+        <div class="product-form--block">
+          <div class="product-form--description">
+            {{ product.description }}
+          </div>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Product Accordions {%- endcomment -%}
+      <div class="product-form--block product-form--accordions collapsible-rows--inline">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'accordion' -%}
+            <div class="collapsible-row--root" {{ block.shopify_attributes }}>
+              <button
+                class="collapsible-row--toggle"
+                aria-expanded="false"
+                aria-controls="accordion-{{ block.id }}"
+              >
+                <span class="collapsible-row--label">{{ block.settings.heading | upcase }}</span>
+                <span class="collapsible-row--icon" aria-hidden="true">
+                  <span class="collapsible-row--icon-h"></span>
+                  <span class="collapsible-row--icon-v"></span>
+                </span>
+              </button>
+              <div class="collapsible-row--wrapper" id="accordion-{{ block.id }}">
+                <div class="collapsible-row--content">
+                  {{ block.settings.content }}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- comment -%} Social Share {%- endcomment -%}
+      {%- if section.settings.show_share -%}
+        <div class="product-form--block product-social--root">
+          <ul class="social-media--items">
+            <li class="social-media--item">
+              <a href="https://www.facebook.com/sharer/sharer.php?u={{ shop.url | append: product.url | url_encode }}" target="_blank" rel="noopener" aria-label="Share on Facebook">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+              </a>
+            </li>
+            <li class="social-media--item">
+              <a href="https://pinterest.com/pin/create/button/?url={{ shop.url | append: product.url | url_encode }}&media={{ product.featured_image | image_url: width: 600 | url_encode }}" target="_blank" rel="noopener" aria-label="Pin on Pinterest">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12a4 4 0 108 0 4 4 0 00-8 0"/><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z"/></svg>
+              </a>
+            </li>
+            <li class="social-media--item">
+              <a href="mailto:?subject={{ product.title | url_encode }}&body={{ shop.url | append: product.url | url_encode }}" aria-label="Share via email">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      {%- endif -%}
+
+    </form>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section",
+  "class": "section-product",
+  "blocks": [
+    {
+      "type": "accordion",
+      "name": "Product accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Accordion heading",
+          "default": "Ingredients"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Accordion content",
+          "default": "<p>List your key ingredients here.</p>"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "label": "Show star rating",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show dynamic checkout button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pickup",
+      "label": "Show store pickup",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "pickup_store",
+      "label": "Store name",
+      "default": "SHIEH Studio"
+    },
+    {
+      "type": "text",
+      "id": "pickup_time",
+      "label": "Pickup time",
+      "default": "24 hours"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share",
+      "label": "Show social share",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product",
+      "blocks": [
+        {
+          "type": "accordion",
+          "settings": {
+            "heading": "Key Ingredients",
+            "content": "<p>List your key ingredients here.</p>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "heading": "How to Use",
+            "content": "<p>Apply morning and evening to cleansed skin.</p>"
+          }
+        },
+        {
+          "type": "accordion",
+          "settings": {
+            "heading": "Shipping & Returns",
+            "content": "<p>Free shipping on orders over £60. Returns accepted within 30 days.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

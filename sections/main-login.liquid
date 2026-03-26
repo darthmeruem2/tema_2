@@ -1,0 +1,105 @@
+<div class="main-page--root" style="max-width:480px;">
+
+  <h1 class="main-page--title">LOGIN</h1>
+
+  {%- if form.errors -%}
+    <div style="padding:12px 16px; background:#fff0f0; border:1px solid #f5c6c6; margin-bottom:var(--layout--spacing-medium);">
+      <p style="font-size:11px; color:#c0392b; text-transform:uppercase;">
+        {%- for error in form.errors -%}
+          {{ form.errors.messages[error] }}<br>
+        {%- endfor -%}
+      </p>
+    </div>
+  {%- endif -%}
+
+  {%- form 'customer_login' -%}
+    <div style="display:flex; flex-direction:column; gap:16px;">
+
+      <div>
+        <label style="display:block; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;" for="CustomerEmail">
+          Email
+        </label>
+        <input
+          type="email"
+          name="customer[email]"
+          id="CustomerEmail"
+          autocomplete="email"
+          autocorrect="off"
+          autocapitalize="off"
+          style="width:100%; height:var(--input--height); padding:var(--input--padding); border:1px solid rgba(0,0,0,0.15); font-family:var(--font--paragraph--family); font-size:var(--font--nav--size); text-transform:uppercase; background:transparent; outline:none; box-sizing:border-box;"
+          placeholder="SEU@EMAIL.COM"
+        >
+      </div>
+
+      <div>
+        <label style="display:block; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;" for="CustomerPassword">
+          Senha
+        </label>
+        <input
+          type="password"
+          name="customer[password]"
+          id="CustomerPassword"
+          autocomplete="current-password"
+          style="width:100%; height:var(--input--height); padding:var(--input--padding); border:1px solid rgba(0,0,0,0.15); font-family:var(--font--paragraph--family); font-size:var(--font--nav--size); text-transform:uppercase; background:transparent; outline:none; box-sizing:border-box;"
+          placeholder="SENHA"
+        >
+      </div>
+
+      <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px;">
+        <button type="submit" class="btn btn--1" style="flex:1; min-width:140px;">
+          ENTRAR
+        </button>
+        <a href="/account/login#recover" style="font-size:10px; text-transform:uppercase; color:var(--color--gray); letter-spacing:0.05em;">
+          Esqueceu a senha?
+        </a>
+      </div>
+
+    </div>
+  {%- endform -%}
+
+  <div style="margin-top:var(--layout--spacing-medium); padding-top:var(--layout--spacing-medium); border-top:1px solid rgba(0,0,0,0.06);">
+    <p style="font-size:11px; text-transform:uppercase; color:var(--color--gray); margin-bottom:12px;">
+      Ainda não tem conta?
+    </p>
+    <a href="/account/register" class="btn btn--2">CRIAR CONTA</a>
+  </div>
+
+  <!-- Recover password form -->
+  <div id="recover" style="display:none; margin-top:var(--layout--spacing-medium); padding-top:var(--layout--spacing-medium); border-top:1px solid rgba(0,0,0,0.06);">
+    <h2 style="font-size:14px; font-weight:700; text-transform:uppercase; margin-bottom:var(--layout--spacing-medium);">
+      RECUPERAR SENHA
+    </h2>
+    {%- form 'recover_customer_password' -%}
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <label style="display:block; font-size:10px; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:6px;" for="RecoverEmail">
+            Email
+          </label>
+          <input
+            type="email"
+            name="email"
+            id="RecoverEmail"
+            style="width:100%; height:var(--input--height); padding:var(--input--padding); border:1px solid rgba(0,0,0,0.15); font-family:var(--font--paragraph--family); font-size:var(--font--nav--size); text-transform:uppercase; background:transparent; outline:none; box-sizing:border-box;"
+            placeholder="SEU@EMAIL.COM"
+          >
+        </div>
+        <button type="submit" class="btn btn--1">ENVIAR LINK</button>
+      </div>
+    {%- endform -%}
+  </div>
+
+  <script>
+    if (window.location.hash === '#recover') {
+      document.getElementById('recover').style.display = 'block';
+    }
+  </script>
+
+</div>
+
+{% schema %}
+{
+  "name": "Login",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

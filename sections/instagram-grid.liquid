@@ -1,0 +1,111 @@
+<div class="instagram-grid--root">
+  <div class="instagram-grid--wrapper">
+
+    <div class="instagram-grid--header">
+      <h2>
+        {%- if section.settings.heading != blank -%}
+          {{ section.settings.heading }}
+        {%- else -%}
+          SHOP THE FEED
+          {%- if section.settings.handle != blank -%}
+            <span style="color:var(--color--accent-1);">@{{ section.settings.handle }}</span>
+          {%- endif -%}
+        {%- endif -%}
+      </h2>
+    </div>
+
+    <div class="instagram-grid--body">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'photo' -%}
+          <a
+            class="instagram-grid--item"
+            href="{{ block.settings.link | default: '#' }}"
+            aria-label="{{ block.settings.tag }}"
+            {{ block.shopify_attributes }}
+          >
+            {%- if block.settings.image != blank -%}
+              <img
+                src="{{ block.settings.image | image_url: width: 420 }}"
+                srcset="{{ block.settings.image | image_url: width: 210 }} 210w,
+                        {{ block.settings.image | image_url: width: 420 }} 420w"
+                alt="{{ block.settings.image.alt | default: block.settings.tag | escape }}"
+                width="210"
+                height="210"
+                loading="lazy"
+              >
+            {%- else -%}
+              {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {%- endif -%}
+            <div class="instagram-grid--overlay">
+              {%- if block.settings.tag != blank -%}
+                <span class="instagram-grid--tag">{{ block.settings.tag }}</span>
+              {%- endif -%}
+            </div>
+          </a>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Instagram Grid",
+  "tag": "section",
+  "class": "section-instagram-grid",
+  "blocks": [
+    {
+      "type": "photo",
+      "name": "Photo",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image",
+          "info": "Square images recommended"
+        },
+        {
+          "type": "text",
+          "id": "tag",
+          "label": "Hashtag overlay",
+          "default": "#SHIEHSKIN"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link to product or page"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Section heading"
+    },
+    {
+      "type": "text",
+      "id": "handle",
+      "label": "Instagram handle (without @)",
+      "default": "shiehskin"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram Grid",
+      "settings": {
+        "handle": "shiehskin"
+      },
+      "blocks": [
+        { "type": "photo", "settings": { "tag": "#GlowUp" } },
+        { "type": "photo", "settings": { "tag": "#SHIEHSkin" } },
+        { "type": "photo", "settings": { "tag": "#CleanBeauty" } },
+        { "type": "photo", "settings": { "tag": "#SkinSecrets" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

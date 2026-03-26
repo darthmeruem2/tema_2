@@ -1,0 +1,15 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {}
+    },
+    "footer": {
+      "type": "footer",
+      "settings": {
+        "show_newsletter": false
+      }
+    }
+  },
+  "order": ["main", "footer"]
+}
