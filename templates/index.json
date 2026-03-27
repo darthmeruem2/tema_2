@@ -1,62 +1,138 @@
 {
   "sections": {
-    "trust_bar": { "type": "trust-bar", "settings": {} },
-    "hero": { "type": "hero-split", "settings": {
-      "heading": "Same Lab. Same Results. £56 Less.",
-      "subheading": "We source the same active ingredients as luxury K-beauty. Then we show you exactly what's inside — concentrations included.",
-      "cta_text": "See What's Inside",
-      "cta_link": "/collections/all",
-      "product_name": "Niacinamide 5% Glow Gel",
-      "product_price": "£24.99",
-      "product_was": "£80.00"
-    }},
-    "manifesto": { "type": "brand-manifesto", "settings": {
-      "text": "We list every ingredient. Every percentage. Every time. Because honest skincare shouldn't be a luxury.",
-      "size": "medium"
-    }},
-    "products": { "type": "home-product-grid", "settings": { "title": "The Collection" }},
-    "difference": { "type": "split-difference", "settings": {
-      "overline": "The SHIEH Difference",
-      "heading": "Clinical Actives. No Hiding.",
-      "body_1": "Most skincare brands list niacinamide on the label. Few will tell you it's at 0.1% — a concentration too low to do anything. SHIEH formulates at clinically active thresholds and publishes every number.",
-      "body_2": "The result: £24 products that outperform £80 competitors on paper and in practice. Not because we're cheaper. Because we stopped paying for the opacity.",
-      "cta_text": "Discover More",
-      "cta_link": "/collections/all"
-    }},
-    "pillars": { "type": "home-pillars", "blocks": {
-      "pillar1": { "type": "pillar", "settings": { "icon": "🔬", "heading": "No Decorative Ingredients", "text": "Every active in every SHIEH formula sits at its clinically validated concentration. We publish the numbers. You verify them." }},
-      "pillar2": { "type": "pillar", "settings": { "icon": "✓", "heading": "EU & ECOCERT Certified", "text": "Third-party verified. ECOCERT certified formulas. GPSR compliant across the EU and UK. No asterisks on our safety claims." }},
-      "pillar3": { "type": "pillar", "settings": { "icon": "🌿", "heading": "Seoul Lab. Honest Lab.", "text": "Formulated with South Korean cosmetic science — the same methodology behind the world's most effective skincare. Disclosed in full by Sora Yun." }}
-    }, "blocks_order": ["pillar1","pillar2","pillar3"]},
-    "sistema": { "type": "sistema-shieh", "settings": {
-      "overline": "The SHIEH Method",
-      "heading": "Three Steps to Skincare You Can Actually Verify"
-    }, "blocks": {
-      "step1": { "type": "step", "settings": { "step_number": "01", "step_name": "KNOW", "step_description": "Read your label with confidence. Every INCI list tells a story — position 1 is the most abundant ingredient. Position 12 is a gesture. We teach you the difference." }},
-      "step2": { "type": "step", "settings": { "step_number": "02", "step_name": "CHOOSE", "step_description": "Select the right active for your skin — not the most expensive one. With concentration knowledge, you shop on evidence. Not on packaging." }},
-      "step3": { "type": "step", "settings": { "step_number": "03", "step_name": "VERIFY", "step_description": "Track measurable results, not promises. 5% Niacinamide: visible texture improvement in 4–6 weeks. AHA 10%: cell renewal in 8–12 days. Real numbers, always." }}
-    }, "blocks_order": ["step1","step2","step3"]},
-    "reviews": { "type": "social-proof", "blocks": {
-      "r1": { "type": "review", "settings": { "author": "Amara T.", "location": "London, E8", "rating": 5, "text": "I'm a nurse. I read every INCI list. SHIEH is the first brand that hasn't tried to hide a thing. The Niacinamide Gel cleared my texture in three weeks — at a percentage I could actually verify." }},
-      "r2": { "type": "review", "settings": { "author": "Caitlin M.", "location": "Edinburgh, EH4", "rating": 5, "text": "Spent years buying £70 serums and not knowing why they weren't working. Turns out: proprietary blends with 0.3% active. SHIEH's Niacinamide Gel listed 5% — on the label. It works." }},
-      "r3": { "type": "review", "settings": { "author": "Priya K.", "location": "Manchester, M14", "rating": 5, "text": "The AHA Peel is the first exfoliant I've used without guessing whether the concentration was real. Skin looked genuinely smoother in eight days. I've already sent the link to four friends." }}
-    }, "blocks_order": ["r1","r2","r3"]},
-    "faq": { "type": "accordion-image", "settings": {
-      "overline": "What makes us different",
-      "heading": "Honest Beauty, Explained"
-    }, "blocks": {
-      "faq1": { "type": "item", "settings": { "heading": "Transparency", "content": "<p>We list every active ingredient and its clinical concentration on the label and website. No proprietary blends, no hidden formulas. You know exactly what you're putting on your skin.</p>" }},
-      "faq2": { "type": "item", "settings": { "heading": "Quality", "content": "<p>Made by MĀDARA Cosmetics Group in Latvia — 19 years of organic cosmetic manufacturing expertise. ECOCERT COSMOS certified, vegan, cruelty-free. Every batch tested.</p>" }},
-      "faq3": { "type": "item", "settings": { "heading": "Pricing", "content": "<p>We don't believe in the luxury markup. Our £24 Niacinamide Gel contains the same 5% concentration as serums sold for £80+. The molecule doesn't know the price tag.</p>" }},
-      "faq4": { "type": "item", "settings": { "heading": "Certifications", "content": "<p>ECOCERT COSMOS Natural certified. Vegan Society approved. Cruelty-free. Dermatologically tested. No parabens, sulfates, or silicones. Made in EU.</p>" }}
-    }, "blocks_order": ["faq1","faq2","faq3","faq4"]},
-    "blog": { "type": "blog-grid", "settings": {} },
-    "email": { "type": "email-capture", "settings": {
-      "heading": "You're Being Lied to by Your Skincare Label.",
-      "subheading": "Download The INCI Guide — the cosmetic scientist's toolkit for decoding ingredient lists, spotting filler concentrations, and buying skincare that actually works. Free, immediate, no strings.",
-      "cta_text": "Send Me The Guide"
-    }},
-    "footer": { "type": "footer", "settings": {} }
+    "trust_bar": {
+      "type": "trust-bar",
+      "settings": {}
+    },
+    "hero": {
+      "type": "hero-split",
+      "settings": {
+        "heading": "FACE YOUR\nSKIN WITH\nHONESTY",
+        "subheading": "Clinical K-beauty ingredients. EU certified formulations. Prices that respect you.",
+        "cta_text": "Shop Now",
+        "cta_link": "/collections/all",
+        "product_name": "Niacinamide 5% Glow Gel",
+        "product_price": "£24.99"
+      }
+    },
+    "manifesto": {
+      "type": "brand-manifesto",
+      "settings": {
+        "text": "Open your mind to the possibility of honest, clinical skincare — only with SHIEH",
+        "size": "medium"
+      }
+    },
+    "products": {
+      "type": "home-product-grid",
+      "settings": {
+        "title": "The Collection",
+        "show_price": true
+      }
+    },
+    "difference": {
+      "type": "split-difference",
+      "settings": {
+        "overline": "The SHIEH Difference",
+        "heading": "Your skin can't read a price tag",
+        "body_1": "A 5% niacinamide molecule doesn't care if it costs £24 or £80. We use the same clinical-grade ingredients as luxury brands — at a fraction of the price. Every concentration listed. Every formula EU certified. Zero compromise on quality.",
+        "body_2": "The result: products that outperform £80 competitors on paper and in practice. Not because we're cheaper. Because we stopped paying for the opacity.",
+        "cta_text": "Discover More",
+        "cta_link": "/collections/all",
+        "image_position": "left"
+      }
+    },
+    "pillars": {
+      "type": "home-pillars",
+      "blocks": {
+        "pillar1": {
+          "type": "pillar",
+          "settings": {
+            "icon": "◦",
+            "heading": "All Skin Types",
+            "text": "Formulated to work across all skin types and concerns. Gentle yet effective, our products adapt to what your skin needs."
+          }
+        },
+        "pillar2": {
+          "type": "pillar",
+          "settings": {
+            "icon": "✓",
+            "heading": "EU Certified",
+            "text": "Every product is ECOCERT COSMOS certified, meeting the strictest European safety and sustainability standards."
+          }
+        },
+        "pillar3": {
+          "type": "pillar",
+          "settings": {
+            "icon": "◇",
+            "heading": "K-Beauty Science",
+            "text": "Korean cosmetic science meets European quality standards. Clinical ingredients, simplified routines, proven results."
+          }
+        }
+      },
+      "blocks_order": ["pillar1", "pillar2", "pillar3"]
+    },
+    "faq": {
+      "type": "accordion-image",
+      "settings": {
+        "overline": "What makes us different",
+        "heading": "Honest Beauty, Explained"
+      },
+      "blocks": {
+        "faq1": {
+          "type": "item",
+          "settings": {
+            "heading": "Transparency",
+            "content": "<p>We list every active ingredient and its clinical concentration on the label and website. No proprietary blends, no hidden formulas. You know exactly what you're putting on your skin.</p>"
+          }
+        },
+        "faq2": {
+          "type": "item",
+          "settings": {
+            "heading": "Quality",
+            "content": "<p>Made by MĀDARA Cosmetics Group in Latvia — 19 years of organic cosmetic manufacturing expertise. ECOCERT COSMOS certified, vegan, cruelty-free. Every batch tested.</p>"
+          }
+        },
+        "faq3": {
+          "type": "item",
+          "settings": {
+            "heading": "Pricing",
+            "content": "<p>We don't believe in the luxury markup. Our £24 Niacinamide Gel contains the same 5% concentration as serums sold for £80+. The molecule doesn't know the price tag.</p>"
+          }
+        },
+        "faq4": {
+          "type": "item",
+          "settings": {
+            "heading": "Certifications",
+            "content": "<p>ECOCERT COSMOS Natural certified. Vegan Society approved. Cruelty-free. Dermatologically tested. No parabens, sulfates, or silicones. Made in EU.</p>"
+          }
+        }
+      },
+      "blocks_order": ["faq1", "faq2", "faq3", "faq4"]
+    },
+    "blog": {
+      "type": "blog-grid",
+      "settings": {}
+    },
+    "email": {
+      "type": "email-capture",
+      "settings": {
+        "overline": "Join the Lab",
+        "heading": "You're Being Lied to by Your Skincare Label.",
+        "subheading": "Download The INCI Guide — the cosmetic scientist's toolkit for decoding ingredient lists, spotting filler concentrations, and buying skincare that actually works. Free, immediate, no strings.",
+        "cta_text": "Send Me The Guide",
+        "note_text": "No spam. Unsubscribe at any time."
+      }
+    }
   },
-  "order": ["trust_bar","hero","manifesto","products","difference","pillars","sistema","reviews","faq","blog","email","footer"]
+  "order": [
+    "trust_bar",
+    "hero",
+    "manifesto",
+    "products",
+    "difference",
+    "pillars",
+    "faq",
+    "blog",
+    "email"
+  ]
 }

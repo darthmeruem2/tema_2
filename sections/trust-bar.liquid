@@ -1,59 +1,72 @@
-<div class="trust-bar">
-  <div class="trust-bar--inner">
-
-    <div class="trust-bar--item">
-      <span class="trust-bar--icon">🚚</span>
-      <div class="trust-bar--texts">
-        <span class="trust-bar--text">Free UK Delivery Over £45</span>
-        <span class="trust-bar--subtext">Tracked 48h, no conditions</span>
-      </div>
+<div class="ticker-section" role="marquee" aria-label="Trust signals">
+  <div class="ticker-track" aria-hidden="true">
+    <!-- First set -->
+    <div class="ticker-item">
+      <span class="ticker-text">Free UK Delivery Over £45</span>
+      <span class="ticker-dot"></span>
     </div>
-
-    <div class="trust-bar--item">
-      <span class="trust-bar--icon">🔬</span>
-      <div class="trust-bar--texts">
-        <span class="trust-bar--text">Full INCI. Every Percentage.</span>
-        <span class="trust-bar--subtext">No proprietary blends. Ever.</span>
-      </div>
+    <div class="ticker-item">
+      <span class="ticker-text">Full INCI. Every Percentage. Always.</span>
+      <span class="ticker-dot"></span>
     </div>
-
-    <div class="trust-bar--item">
-      <span class="trust-bar--icon">✓</span>
-      <div class="trust-bar--texts">
-        <span class="trust-bar--text">ECOCERT Certified Formulas</span>
-        <span class="trust-bar--subtext">Third-party verified</span>
-      </div>
+    <div class="ticker-item">
+      <span class="ticker-text">ECOCERT COSMOS Certified</span>
+      <span class="ticker-dot"></span>
     </div>
-
-    <div class="trust-bar--item">
-      <span class="trust-bar--icon">↩</span>
-      <div class="trust-bar--texts">
-        <span class="trust-bar--text">30-Day Honest Returns</span>
-        <span class="trust-bar--subtext">If it doesn't perform, return it</span>
-      </div>
+    <div class="ticker-item">
+      <span class="ticker-text">No Proprietary Blends. Ever.</span>
+      <span class="ticker-dot"></span>
     </div>
-
-    <div class="trust-bar--item">
-      <span class="trust-bar--icon">🧪</span>
-      <div class="trust-bar--texts">
-        <span class="trust-bar--text">Formulated by Sora Yun, MSc</span>
-        <span class="trust-bar--subtext">Cosmetic Science, Seoul</span>
-      </div>
+    <div class="ticker-item">
+      <span class="ticker-text">Formulated by Sora Yun MSc — Seoul</span>
+      <span class="ticker-dot"></span>
     </div>
-
+    <div class="ticker-item">
+      <span class="ticker-text">30-Day Honest Returns</span>
+      <span class="ticker-dot"></span>
+    </div>
+    <div class="ticker-item">
+      <span class="ticker-text">UK Responsible Person Certified</span>
+      <span class="ticker-dot"></span>
+    </div>
+    <!-- Duplicate for seamless loop -->
+    <div class="ticker-item">
+      <span class="ticker-text">Free UK Delivery Over £45</span>
+      <span class="ticker-dot"></span>
+    </div>
+    <div class="ticker-item">
+      <span class="ticker-text">Full INCI. Every Percentage. Always.</span>
+      <span class="ticker-dot"></span>
+    </div>
+    <div class="ticker-item">
+      <span class="ticker-text">ECOCERT COSMOS Certified</span>
+      <span class="ticker-dot"></span>
+    </div>
+    <div class="ticker-item">
+      <span class="ticker-text">No Proprietary Blends. Ever.</span>
+      <span class="ticker-dot"></span>
+    </div>
+    <div class="ticker-item">
+      <span class="ticker-text">Formulated by Sora Yun MSc — Seoul</span>
+      <span class="ticker-dot"></span>
+    </div>
+    <div class="ticker-item">
+      <span class="ticker-text">30-Day Honest Returns</span>
+      <span class="ticker-dot"></span>
+    </div>
+    <div class="ticker-item">
+      <span class="ticker-text">UK Responsible Person Certified</span>
+      <span class="ticker-dot"></span>
+    </div>
   </div>
 </div>
 
 {% schema %}
 {
-  "name": "Trust Bar",
+  "name": "Ticker Bar",
   "tag": "div",
-  "class": "trust-bar-section",
+  "class": "ticker-section-wrap",
   "settings": [],
-  "presets": [
-    {
-      "name": "Trust Bar"
-    }
-  ]
+  "presets": [{ "name": "Ticker Bar" }]
 }
 {% endschema %}
